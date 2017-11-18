@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pg-heroku'),
 
     /*
     |--------------------------------------------------------------------------
@@ -76,6 +76,17 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
+        ],
+
+        'pg-heroku' => [
+            'driver' => 'pgsql',
+            'host' => 'ec2-107-20-193-89.compute-1.amazonaws.com',
+            'database' => 'd3fgvgufsl18bh',
+            'username' => 'jrnexohhoewsxp',
+            'password' => '6c74990a05d7ba43d276f52773e89d5e2932edc72accd5f42b0b0b065deeaa32',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'public',
         ],
 
     ],
