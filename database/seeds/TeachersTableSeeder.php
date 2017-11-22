@@ -12,16 +12,15 @@ class TeachersTableSeeder extends Seeder
      */
     public function run()
     {
-        Teacher::created(['name' => 'test seeding']);
-//        $csvPath = database_path('csv/FakeTeachersListW2017.csv');
-//
-//        $csv = fopen($csvPath);
-//
-//        fgetcsv($csv); // Skip the first line
+        $csvPath = database_path('csv/FakeTeachersListW2017.csv');
 
-//        while($data = fgetcsv($csv) !== FALSE) {
-//            Teacher::created(['name' => $data['teacherName']]);
-//        }
+        $csv = fopen($csvPath);
+
+        fgetcsv($csv); // Skip the first line
+
+        while($data = fgetcsv($csv) !== FALSE) {
+            Teacher::created(['name' => $data['teacherName']]);
+        }
 
     }
 }
