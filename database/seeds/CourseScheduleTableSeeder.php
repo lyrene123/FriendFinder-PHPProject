@@ -28,7 +28,6 @@ class CourseScheduleTableSeeder extends Seeder
                 $start = trim($linecsv[5]);
                 $end = trim($linecsv[6]);
 
-                var_dump($linecsv);
                 $class = trim($linecsv[0]);
                 $teachername = trim($linecsv[3]);
 
