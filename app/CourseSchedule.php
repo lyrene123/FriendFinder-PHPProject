@@ -8,7 +8,7 @@ class CourseSchedule extends Pivot
 {
     protected $table = 'course_schedules';
 
-    protected $fillable = ['class', 'section', 'day', 'start', 'end', 'teacher_id', 'course_id',];
+    protected $fillable = ['section', 'day', 'start', 'end', 'teacher_id', 'course_id',];
 
 
     public function courses(){

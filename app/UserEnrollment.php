@@ -8,7 +8,7 @@ class UserEnrollment extends Pivot
 {
     protected $table = 'user_enrollments';
 
-    protected $fillable = ['sender_id', 'receiver_id',];
+    protected $fillable = ['user_id', 'course_id',];
 
     public function users(){
         return $this->belongsToMany("App\User")->using("App\UserEnrollment");

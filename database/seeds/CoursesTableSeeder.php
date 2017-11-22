@@ -12,6 +12,27 @@ class CoursesTableSeeder extends Seeder
      */
     public function run()
     {
-        Course::create(['class' => 'askdfjh', 'title' => 'aslkdfj']);
+        $csvPath = database_path('csv/FakeTeachersListW2017.csv');
+
+        $csv = fopen($csvPath, 'r');
+
+        fgetcsv($csv); // Skip the first line
+
+        $csvArr = array();
+        while(!feof($csv)){
+            $linecsv = fgetcsv($csv);
+
+            if($linecsv !== false) {
+                $class = trim($linecsv[0]);
+                $title = trim($linecsv[2]);
+
+                if (!isset($csvArr[$class])) {
+                    Course::create(['class' => $class, 'title' => $title]);
+                    $csvArr[$class] = $class;
+                }
+            }
+        }
+
+        fclose($csv);
     }
 }
