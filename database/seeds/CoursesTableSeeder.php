@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Teacher;
+use App\Course;
 
-class TeachersTableSeeder extends Seeder
+class CoursesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -23,12 +23,12 @@ class TeachersTableSeeder extends Seeder
             $linecsv = fgetcsv($csv);
 
             if($linecsv !== false) {
-                $name = trim($linecsv[3]);
+                $class = trim($linecsv[0]);
+                $title = trim($linecsv[2]);
 
-                if (!isset($csvArr[$name])) {
-                    //echo "im hereeee";
-                    Teacher::create(['name' => $name]);
-                    $csvArr[$name] = $name;
+                if (!isset($csvArr[$class])) {
+                    Course::create(['class' => $class, 'title' => $title]);
+                    $csvArr[$class] = $class;
                 }
             }
         }
