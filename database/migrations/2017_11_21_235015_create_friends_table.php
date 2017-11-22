@@ -18,7 +18,7 @@ class CreateFriendsTable extends Migration
             $table->timestamps();
             $table->integer('sender_id')->unsigned();
             $table->integer('receiver_id')->unsigned();
-            $table->string('status');
+            $table->boolean('confirmed');
             $table->foreign('sender_id')
                 ->references('id')->on('users');
             $table->foreign('receiver_id')

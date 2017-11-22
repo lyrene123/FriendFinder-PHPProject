@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -31,15 +32,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Friend');
     }
 
-    public function courses() {
-        return $this->belongsToMany('App\Course')->using('App\UserEnrollment');
-    }
-
-    public function newPivot(self $parent, array $attributes, $table, $exists, $using = null)
+    public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
     {
         if($parent instanceof Course){
-            return new UserEnrollment($parent, $attributes, $table, $exists);
+            return new UserEnrollment($parent, $attributes, $table, $exists, $using);
         }
-        return parent::newPivot($parent, $attributes, $table, $exists);
+        return parent::newPivot($parent, $attributes, $table, $exists, $using);
     }
 }
