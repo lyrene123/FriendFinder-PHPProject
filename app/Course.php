@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    protected $fillable = ["class", "title"];
+    protected $fillable = ["class", "section", "title",];
 
     public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
     {

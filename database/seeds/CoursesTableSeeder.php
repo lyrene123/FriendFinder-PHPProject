@@ -24,10 +24,15 @@ class CoursesTableSeeder extends Seeder
 
             if($linecsv !== false) {
                 $class = trim($linecsv[0]);
+                $section = trim($linecsv[1]);
                 $title = trim($linecsv[2]);
 
                 if (!isset($csvArr[$class])) {
-                    Course::create(['class' => $class, 'title' => $title]);
+                    Course::create([
+                        'class' => $class,
+                        'section' => $section,
+                        'title' => $title
+                    ]);
                     $csvArr[$class] = $class;
                 }
             }
