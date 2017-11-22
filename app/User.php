@@ -26,4 +26,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function friends() {
+        return $this->hasMany('App\Friend');
+    }
+
+    public function courses() {
+        return $this->belongsToMany('App\Course')->using('App\UserEnrollment');
+    }
+
+    public function newPivot(self $parent, array $attributes, $table, $exists, $using = null)
+    {
+        if($parent instanceof Course){
+            return new UserEnrollment($parent, $attributes, $table, $exists);
+        }
+        return parent::newPivot($parent, $attributes, $table, $exists);
+    }
 }
