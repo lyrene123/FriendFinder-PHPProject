@@ -18,7 +18,6 @@ class CreateUsersEnrollmentsTable extends Migration
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->integer('course_id')->unsigned();
-            $table->string('class');
             $table->foreign('user_id')
                 ->references('id')->on('users');
             $table->foreign('course_id')
