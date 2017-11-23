@@ -12,26 +12,26 @@ class FriendsTableSeeder extends Seeder
     public function run()
     {
         Friend::create([
-            'sender_id' => 2,
+            'user_id' => 1,
+            'receiver_id' => 2,
+            'confirmed' => true,
+        ]);
+
+        Friend::create([
+            'user_id' => 1,
             'receiver_id' => 3,
             'confirmed' => true,
         ]);
 
         Friend::create([
-            'sender_id' => 2,
+            'user_id' => 1,
             'receiver_id' => 4,
-            'confirmed' => true,
-        ]);
-
-        Friend::create([
-            'sender_id' => 2,
-            'receiver_id' => 5,
             'confirmed' => false,
         ]);
 
         Friend::create([
-            'sender_id' => 6,
-            'receiver_id' => 2,
+            'user_id' => 5,
+            'receiver_id' => 1,
             'confirmed' => false,
         ]);
     }
