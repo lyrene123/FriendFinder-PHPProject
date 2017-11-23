@@ -18,3 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/friendbreak', 'FriendBreakController@index'); // this is only because I need to manually view it
+Route::post('/friendbreak/search', 'FriendBreakController@search');
