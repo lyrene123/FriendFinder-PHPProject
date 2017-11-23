@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\UserEnrollment;
+use App\CourseUser;
 
-class SampleUserEnrollmentSeeder extends Seeder
+class CourseUserTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,22 +13,22 @@ class SampleUserEnrollmentSeeder extends Seeder
     public function run()
     {
         //'user_id', 'course_id'
-        UserEnrollment::create([
-           'user_id' => 1,
-           'course_id' => 1
+        CourseUser::create([
+            'user_id' => 1,
+            'course_id' => 1
         ]);
 
-        UserEnrollment::create([
+        CourseUser::create([
             'user_id' => 1,
             'course_id' => 3
         ]);
 
-        UserEnrollment::create([
+        CourseUser::create([
             'user_id' => 2,
             'course_id' => 2
         ]);
 
-        UserEnrollment::create([
+        CourseUser::create([
             'user_id' => 2,
             'course_id' => 4
         ]);
