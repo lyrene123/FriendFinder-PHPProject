@@ -16,6 +16,6 @@ Route::get('/', 'HomeController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/friend', 'FriendController@index')->middleware('auth')->name('friend');;
+Route::get('/friends', 'FriendController@index')->middleware('auth')->name('friends');
 Route::post('/friend', 'FriendController@store')->middleware('auth');
-Route::delete('/friend', 'FriendController@destroy')->middleware('auth');
+Route::delete('/friend/{friend}', 'FriendController@destroy')->middleware('auth');

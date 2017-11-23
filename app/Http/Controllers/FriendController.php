@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,7 +46,27 @@ class FriendController extends Controller
         return view('friend.index', ['friends' => $friends]);
     }
 
-    public function store(Request $request){
+    public function destroy(Friend $friend)
+    {
+        $this->authorize('destroy', $friend);
+
+
+       // $record = DB::table('friends')
+        $friend->delete();
+
+        if($friend->confirmed) {
+            $otherRecord = User::find($friend->receiver_id)
+                ->friends()
+                ->where("user_id", $friend->receiver_id)
+                ->where("receiver_id", Auth::user()->id)
+                ->get();
+            $otherRecord[0]->delete();
+        }
+        return redirect('friends');
+    }
+
+    public function store(Request $request)
+    {
         //TODO - validate if already friends then add an friend entry
     }
 }

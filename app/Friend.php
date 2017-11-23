@@ -35,8 +35,8 @@ class Friend extends Model
      * @param User $user a User instance to verify
      * @return bool true or false if input User can unfriend
      */
-    public function userCanUnfriend(User $user){
-        if($user->id === $this->sender_id || $user->id === $this->receiver_id){
+    public function userCanEdit(User $user){
+        if($user->id === $this->user_id){
             return true;
         }
         return false;

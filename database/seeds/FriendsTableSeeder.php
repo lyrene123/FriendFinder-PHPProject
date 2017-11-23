@@ -18,8 +18,20 @@ class FriendsTableSeeder extends Seeder
         ]);
 
         Friend::create([
+            'user_id' => 2,
+            'receiver_id' => 1,
+            'confirmed' => true,
+        ]);
+
+        Friend::create([
             'user_id' => 1,
             'receiver_id' => 3,
+            'confirmed' => true,
+        ]);
+
+        Friend::create([
+            'user_id' => 3,
+            'receiver_id' => 1,
             'confirmed' => true,
         ]);
 

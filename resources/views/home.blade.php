@@ -18,7 +18,7 @@
                 </div>
                 <div>
                     @if (Auth::check())
-                        <a href=" {{ route('friend') }} ">Manage your friends</a>
+                        <a href=" {{ route('friends') }} ">Manage your friends</a>
                     @endif
                 </div>
             </div>
