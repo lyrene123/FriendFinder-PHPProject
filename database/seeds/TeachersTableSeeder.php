@@ -36,4 +36,3 @@ class TeachersTableSeeder extends Seeder
         fclose($csv);
     }
 }
-

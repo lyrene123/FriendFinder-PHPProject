@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\CourseSchedule;
+use App\CourseTeacher;
 
-class CourseScheduleTableSeeder extends Seeder
+class CourseTeacherTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -31,7 +31,7 @@ class CourseScheduleTableSeeder extends Seeder
                 $courseId = DB::table('courses')->where('class', '=', $class)->first()->id;
                 $teacherId = DB::table('teachers')->where('name', '=', $teachername)->first()->id;
 
-                CourseSchedule::create([
+                CourseTeacher::create([
                     'day' => $day,
                     'start' => $start,
                     'end' => $end,
