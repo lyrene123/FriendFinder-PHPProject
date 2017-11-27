@@ -17,7 +17,7 @@ class SampleUsersSeeder extends Seeder
             'lastname' => 'Sy',
             'email' => 'pengkim.test@gmail.com',
             'program' => 'Computer Science',
-            'password' => '123'
+            'password' => password_hash('123', PASSWORD_DEFAULT),
         ]);
 
         User::create([
@@ -25,7 +25,7 @@ class SampleUsersSeeder extends Seeder
             'lastname' => 'Labor',
             'email' => 'lyrene.test@gmail.com',
             'program' => 'Graphic Design',
-            'password' => '123'
+            'password' => password_hash('123', PASSWORD_DEFAULT),
         ]);
 
         User::create([
@@ -33,7 +33,7 @@ class SampleUsersSeeder extends Seeder
             'lastname' => 'IDK',
             'email' => 'phillipe.test@gmail.com',
             'program' => 'Civil Engineer',
-            'password' => '123'
+            'password' => password_hash('123', PASSWORD_DEFAULT),
         ]);
 
         User::create([
@@ -41,7 +41,7 @@ class SampleUsersSeeder extends Seeder
             'lastname' => 'IDK',
             'email' => 'petter.test@gmail.com',
             'program' => 'English Literature',
-            'password' => '123'
+            'password' => password_hash('123', PASSWORD_DEFAULT),
         ]);
 
         User::create([
@@ -49,7 +49,7 @@ class SampleUsersSeeder extends Seeder
             'lastname' => 'IDK',
             'email' => 'werner.test@gmail.com',
             'program' => 'Computer Science',
-            'password' => '123'
+            'password' => password_hash('123', PASSWORD_DEFAULT),
         ]);
 
         User::create([
@@ -57,7 +57,7 @@ class SampleUsersSeeder extends Seeder
             'lastname' => 'Cava... something',
             'email' => 'daniel.test@gmail.com',
             'program' => 'Law',
-            'password' => '123'
+            'password' => password_hash('123', PASSWORD_DEFAULT),
         ]);
 
         User::create([
@@ -65,7 +65,7 @@ class SampleUsersSeeder extends Seeder
             'lastname' => 'Dali',
             'email' => 'Ali.test@gmail.com',
             'program' => 'Graphic Design',
-            'password' => '123'
+            'password' => password_hash('123', PASSWORD_DEFAULT),
         ]);
     }
 }

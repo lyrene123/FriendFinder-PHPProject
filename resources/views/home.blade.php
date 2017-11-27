@@ -16,6 +16,11 @@
 
                     You are logged in!
                 </div>
+                <div>
+                    @if (Auth::check())
+                        <a href=" {{ route('friends') }} ">Manage your friends</a>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

@@ -21,8 +21,9 @@ class CreateFriendsTable extends Migration
             $table->boolean('confirmed');
             $table->foreign('user_id')
                 ->references('id')->on('users');
-//            $table->foreign('receiver_id')
-//                ->references('id')->on('users');
+
+            //$table->foreign('receiver_id')
+               // ->references('id')->on('users');
         });
     }
 
