@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 class Friend extends Model
 {
     protected $fillable = ['user_id', 'receiver_id','confirmed',];
-<<<<<<< HEAD
+
     protected $table = 'friends';
 
     /**
@@ -25,11 +25,6 @@ class Friend extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-=======
-
-    protected $table = 'friends';
-
->>>>>>> b3313660e8ee8815b18fef6b1a7b2a59a819907f
     public function user() {
         return $this->belongsTo('App\User');
     }
