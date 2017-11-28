@@ -18,7 +18,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/friends', 'FriendController@index')->middleware('auth')->name('friends');
-Route::post('/friend', 'FriendController@store')->middleware('auth');
+Route::post('/friend', 'FriendController@search')->middleware('auth');
 Route::delete('/friend/{friend}', 'FriendController@destroy')->middleware('auth');
 
 Route::get('/friendbreak', 'FriendBreakController@index'); // this is only because I need to manually view it

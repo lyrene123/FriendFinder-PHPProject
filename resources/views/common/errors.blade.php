@@ -1,4 +1,4 @@
-@if (count($friends) > 0)
+@if (count($errors) > 0)
     <div class="alert alert-danger">
         <strong>Whoops! Something went wrong!</strong>
 

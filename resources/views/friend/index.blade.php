@@ -5,6 +5,48 @@
     <div class="container">
         <div class="col-sm-offset-2 col-sm-8">
             @if(Auth::check())
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Search for new friends
+                    </div>
+
+                    <div class="panel-body">
+                    @include('common.errors')
+
+                    <!-- Search for friend Form -->
+                        <form action="/friend" method="POST" class="form-horizontal">
+                        {{ csrf_field() }}
+
+                            <div class="form-group">
+                                <label for="search-fname" class="col-sm-3 control-label">First Name</label>
+
+                                <div class="col-sm-6">
+                                    <input type="text" name="fname" id="search-fname" class="form-control" value="{{ old('fname') }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="search-lname" class="col-sm-3 control-label">Last Name</label>
+
+                                <div class="col-sm-6">
+                                    <input type="text" name="lname" id="search-lname" class="form-control" value="{{ old('lname') }}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-6">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fa fa-btn fa-plus"></i>Search
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
                 @if (count($friends) > 0)
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -37,7 +79,7 @@
 
                                         @if(Auth::check() && $friend->userCanEdit(Auth::user()))
                                             <td>
-                                                <form action="{{url('friend/' . $friend->friends.id)}}" method="POST">
+                                                <form action="{{url('friend/' . $friend->id)}}" method="POST">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
 

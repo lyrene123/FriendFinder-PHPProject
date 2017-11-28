@@ -6,6 +6,7 @@ use App\User;
 use App\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Controller class that manages all friends of each user of the FindFriend
@@ -48,16 +49,18 @@ class FriendController extends Controller
 
     public function destroy(Friend $friend)
     {
-        $this->authorize('destroy', $friend);
+        $friend_record = Friend::where('user_id', Auth::user()->id)
+            ->where('receiver_id', $friend->id)
+            ->first();
 
+        $this->authorize('destroy', $friend_record);
 
-       // $record = DB::table('friends')
-        $friend->delete();
+        $friend_record->delete();
 
         if($friend->confirmed) {
-            $otherRecord = User::find($friend->receiver_id)
+            $otherRecord = User::find($friend->id)
                 ->friends()
-                ->where("user_id", $friend->receiver_id)
+                ->where("user_id", $friend->id)
                 ->where("receiver_id", Auth::user()->id)
                 ->get();
             $otherRecord[0]->delete();
