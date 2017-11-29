@@ -42,6 +42,7 @@
                                 <input type="submit" class="btn btn-info" value="Search" name="search">
                             </div>
                         </form>
+                        @include('common.errors')
                     </div>
 
                     <div class="panel-body">
