@@ -42,6 +42,7 @@
                                 <input type="submit" class="btn btn-info" value="Search" name="search">
                             </div>
                         </form>
+                        @include('common.errors')
                     </div>
 
                     <div class="panel-body">
@@ -56,12 +57,11 @@
                                 </thead>
                                 <tbody>
                                     @foreach($users as $user)
-                                        {{ var_dump($user) }}
-                                        {{--<tr>--}}
-                                            {{--<td>{{ $user->firstname }}</td>--}}
-                                            {{--<td>{{ $user->lastname }}</td>--}}
-                                            {{--<td>{{ $user->email }}</td>--}}
-                                        {{--</tr>--}}
+                                        <tr>
+                                            <td>{{ $user->firstname }}</td>
+                                            <td>{{ $user->lastname }}</td>
+                                            <td>{{ $user->email }}</td>
+                                        </tr>
                                     @endforeach;
                                 </tbody>
                             </table>

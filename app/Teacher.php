@@ -12,13 +12,14 @@ class Teacher extends Model
     ];
 
     public function courses(){
-        return $this->belongsToMany("App\Course")->using("App\CourseSchedule");
+        return $this->belongsToMany("App\Course")
+            ->using("App\CourseTeacher")->withPivot('day', 'start', 'end');
     }
 
     public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
     {
         if($parent instanceof Course){
-            return new CourseTeacher($parent, $attributes, $table, $exists, $using);
+            return new CourseTeacher($attributes);
         }
         return parent::newPivot($parent, $attributes, $table, $exists, $using);
     }
