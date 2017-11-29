@@ -56,13 +56,14 @@ class FriendController extends Controller
 
                 $friend_record->delete();
 
-                if (!$friend->confirmed) {
-                    $otherRecord = User::find($friend->id)
-                        ->friends()
-                        ->where("receiver_id", Auth::user()->id)
-                        ->first();
+                $otherRecord = User::find($friend->id)
+                    ->friends()
+                    ->where("receiver_id", Auth::user()->id)
+                    ->first();
+                if($otherRecord !== null) {
                     $otherRecord->delete();
                 }
+
             }
         }
         return redirect('friends');

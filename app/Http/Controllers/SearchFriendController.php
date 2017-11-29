@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Friend;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -67,6 +68,18 @@ class SearchFriendController extends Controller
 
         $users_paginated = $this->constructPagination($usersArr);
         return view('friend.search', ['users' => $users_paginated]);
+    }
+
+    public function add(User $user){
+        if($user !== null ){
+            $this->authorize('add', $user);
+            $found = Friend::firstOrCreate([
+                'user_id' => Auth::user()->id,
+                'receiver_id' => $user->id,
+                'confirmed' => false,
+            ]);
+        }
+        return redirect('friends');
     }
 
     //http://blog.hazaveh.net/2016/03/laravel-5-manual-pagination-from-array/

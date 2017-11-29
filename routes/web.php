@@ -22,6 +22,9 @@ Route::delete('/friend/{friend}', 'FriendController@destroy')->middleware('auth'
 
 Route::get('/search', 'SearchFriendController@index')->middleware('auth')->name('search');
 Route::get('/search/results', 'SearchFriendController@search')->middleware('auth');
+Route::post('/search/add/{user}', 'SearchFriendController@add')->middleware('auth');
+
+Route::get('/requests', 'FriendRequestController@index')->middleware('auth')->name('requests');
 
 Route::get('/friendbreak', 'FriendBreakController@index'); // this is only because I need to manually view it
 Route::post('/friendbreak/search', 'FriendBreakController@search');

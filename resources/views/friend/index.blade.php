@@ -16,7 +16,7 @@
                         <nav id="sidebar-nav">
                             <ul class="nav nav-pills nav-stacked">
                                 <li><a href=" {{ route('search') }} ">Search for friends</a></li>
-                                <li><a href="#">View requests</a></li>
+                                <li><a href="{{ route('requests') }}">View friend requests</a></li>
                             </ul>
                         </nav>
                     </div>
