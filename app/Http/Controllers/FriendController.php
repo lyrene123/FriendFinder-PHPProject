@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 /**
- * Controller class that manages all friends of each user of the FindFriend
- * web application. Handles displaying the list of friends of a logged in user
+ * Controller class that keeps track of the friends of each user of the FindFriend
+ * web application. Handles returning the list of friends of a logged in user
  * in the "Manage Friends" dashboard. Handles the deletion of a friendship
  * when logged in user clicks on the unfriend button on a specific friend.
  * Handles redirection and validation.
@@ -33,9 +33,8 @@ class FriendController extends Controller
     }
 
     /**
-     * Show the the 'Manage my friends' page dashboard by displaying a list
-     * of friends with their status (Confirmed or Pending) and a unfriend
-     * button for each friend entry in the table
+     * Returns the list of all the friends of the logged in user
+     * with their status (Confirmed or Pending)
      *
      * @return \Illuminate\Http\Response
      */

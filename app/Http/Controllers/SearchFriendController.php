@@ -81,7 +81,6 @@ class SearchFriendController extends Controller
             ]);
         }
         return Redirect::to('/friends')->with('messages', "A request is sent to $user->firstname $user->lastname");
-        //return redirect('friend.search', ['messages' => "A request is sent to $user->firstname $user->lastname"]);
     }
 
     //http://blog.hazaveh.net/2016/03/laravel-5-manual-pagination-from-array/
