@@ -36,6 +36,8 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Course')->withPivot('user_id', 'course_id')->withTimestamps();
     }
 
+
+
     public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
     {
         if($parent instanceof Course){

@@ -6,6 +6,7 @@ use App\User;
 use App\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * Controller class that manages all friends of each user of the FindFriend
@@ -36,9 +37,7 @@ class FriendController extends Controller
      */
     public function index()
     {
-        $userid = Auth::user()->id;
-
-        $friends = User::find($userid)
+        $friends =  User::find(Auth::user()->id)
             ->friends()
             ->join("users", "friends.receiver_id", "=", "users.id")
             ->paginate(10);
@@ -48,22 +47,31 @@ class FriendController extends Controller
 
     public function destroy(Friend $friend)
     {
-        $this->authorize('destroy', $friend);
-
-
-       // $record = DB::table('friends')
-        $friend->delete();
-
-        if($friend->confirmed) {
-            $otherRecord = User::find($friend->receiver_id)
+        if($friend !== null) {
+            $friend_record = User::find(Auth::user()->id)
                 ->friends()
-                ->where("user_id", $friend->receiver_id)
-                ->where("receiver_id", Auth::user()->id)
-                ->get();
-            $otherRecord[0]->delete();
+                ->where("receiver_id", $friend->id)
+                ->first();
+            if($friend_record !== null) {
+                $this->authorize('destroy', $friend_record);
+
+                $friend_record->delete();
+
+                $user_friend = User::find($friend->id);
+
+                $otherRecord = User::find($friend->id)
+                    ->friends()
+                    ->where("receiver_id", Auth::user()->id)
+                    ->first();
+                if($otherRecord !== null) {
+                    $otherRecord->delete();
+                }
+                return Redirect::to('/friends')->with('messages', "$user_friend->firstname $user_friend->lastname is no longer your friend");
+            }
         }
         return redirect('friends');
     }
+
 
     public function store(Request $request)
     {
