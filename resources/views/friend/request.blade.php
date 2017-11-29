@@ -37,17 +37,17 @@
                                                     <strong>{{ $request->firstname }}</strong>
                                                     <strong>{{ $request->lastname }}</strong>
                                                 </td>
+                                                <td class="fillWidth"></td>
                                                 <td>
-                                                    <form action="{{ '/requests/accept/' . $request->id }}" method="POST">
+                                                    <form class="d-inline" action="{{ '/requests/accept/' . $request->id }}" method="POST">
                                                         {{ csrf_field() }}
 
                                                         <button type="submit" id="accept-friend-{{ $request->id }}" class="btn btn-success">
                                                             <i class="fa fa-btn fa-plus"></i>Accept
                                                         </button>
                                                     </form>
-                                                </td>
-                                                <td>
-                                                    <form action="{{ '/requests/decline/' . $request->id }}" method="POST">
+
+                                                    <form class="d-inline" action="{{ '/requests/decline/' . $request->id }}" method="POST">
                                                         {{ method_field('DELETE') }}
                                                         {{ csrf_field() }}
 

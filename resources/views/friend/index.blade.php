@@ -10,7 +10,7 @@
                         <h2 class="section-heading">Manage your friends</h2>
                     </div>
                 </div>
-
+                @include('common.messages')
                 <div id="main" class="row">
                     <div id="sidebar" class="col-md-3">
                         <nav id="sidebar-nav">

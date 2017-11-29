@@ -63,18 +63,23 @@ class FriendPolicy
     }
 
     public function accept(User $user, User $userRequesting){
-
         //can only accept a request existing in the db and that is intended for you
-        //this must return a record if valid
+        //returns true if valid
+        return $this->retrieveRequest($user, $userRequesting);
+    }
+
+    private function retrieveRequest(User $user, User $userRequesting){
         $found = Friend::where("user_id", $userRequesting->id)
-            ->where("receiver_id", Auth::user()->id)
+            ->where("receiver_id", $user->id)
             ->first();
 
         //returns true if valid
         return $found !== null;
     }
 
-    public function decline(User $user, Friend $friend){
-
+    public function decline(User $user, User $userRequesting){
+        //can only decline a request existing in the db and that is intended for you
+        //returns true if valid
+        return $this->retrieveRequest($user, $userRequesting);
     }
 }

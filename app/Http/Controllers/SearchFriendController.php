@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class SearchFriendController extends Controller
 {
@@ -33,7 +34,7 @@ class SearchFriendController extends Controller
             'fname' => 'required_without_all:lname',
             'lname' => 'required_without_all:fname',
         ], [
-            'required_without_all' => 'Please enter at least a first name or last name',
+            'required_without_all' => 'Please enter a :attribute',
         ]);
 
         $fname = $request->input("fname");
@@ -79,7 +80,8 @@ class SearchFriendController extends Controller
                 'confirmed' => false,
             ]);
         }
-        return redirect('friends');
+        return Redirect::to('/friends')->with('messages', "A request is sent to $user->firstname $user->lastname");
+        //return redirect('friend.search', ['messages' => "A request is sent to $user->firstname $user->lastname"]);
     }
 
     //http://blog.hazaveh.net/2016/03/laravel-5-manual-pagination-from-array/

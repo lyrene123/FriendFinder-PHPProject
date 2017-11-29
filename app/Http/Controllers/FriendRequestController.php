@@ -17,16 +17,12 @@ class FriendRequestController extends Controller
 
     public function index()
     {
-        $requests = $this->findRequests();
-
-        return view('friend.request', ['requests' => $requests]);
-    }
-
-    private function findRequests(){
-        return Friend::where("receiver_id", Auth::user()->id)
+        $requests = Friend::where("receiver_id", Auth::user()->id)
             ->where("confirmed", false)
             ->join("users", "friends.user_id", "=", "users.id")
             ->paginate(10);
+
+        return view('friend.request', ['requests' => $requests]);
     }
 
     public function accept(User $user)
@@ -47,7 +43,19 @@ class FriendRequestController extends Controller
             'confirmed' => true,
         ]);
 
-        return view('friend.request', ['requests' => $this->findRequests()]);
+        return redirect('requests');
+    }
+
+    public function decline(User $user)
+    {
+        $this->authorize("decline", $user);
+
+        $record = Friend::where("user_id", $user->id)
+            ->where("receiver_id", Auth::user()->id)
+            ->first();
+        $record->delete();
+
+        return redirect('requests');
     }
 
 

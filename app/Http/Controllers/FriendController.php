@@ -6,6 +6,7 @@ use App\User;
 use App\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * Controller class that manages all friends of each user of the FindFriend
@@ -56,6 +57,8 @@ class FriendController extends Controller
 
                 $friend_record->delete();
 
+                $user_friend = User::find($friend->id);
+
                 $otherRecord = User::find($friend->id)
                     ->friends()
                     ->where("receiver_id", Auth::user()->id)
@@ -63,6 +66,7 @@ class FriendController extends Controller
                 if($otherRecord !== null) {
                     $otherRecord->delete();
                 }
+                return Redirect::to('/friends')->with('messages', "$user_friend->firstname $user_friend->lastname is no longer your friend");
             }
         }
         return redirect('friends');

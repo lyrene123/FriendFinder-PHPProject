@@ -28,7 +28,6 @@
 
                             <div class="panel-body">
                             @include('common.errors')
-
                             <!-- Search for friend Form -->
                                 <form action="/search/results" method="GET" class="form-horizontal">
                                     {{ csrf_field() }}
