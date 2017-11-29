@@ -9,9 +9,18 @@ use Illuminate\Support\Facades\Auth;
 
 class FriendBreakController extends Controller
 {
+    private $hours;
+    private $days;
+
     public function __construct() {
 //        $this->middleware('auth');
-
+         $this->hours = [800, 830, 900, 930, 1000, 1030, 1100, 1130
+            , 1200, 1230, 1300, 1330, 1400, 1430, 1500, 1530, 1600
+            , 1630, 1700, 1730, 1800, 1830, 1900, 1930, 2000, 2030
+            , 2100, 2130];
+         for($i=1; $i<=5; $i++) {
+             $this->days[] = $i;
+         }
     }
 
     public function index() {
@@ -19,11 +28,16 @@ class FriendBreakController extends Controller
     }
 
     public function search(Request $request) {
-        //$this->validate(); Need to do this validation
+        $day = $request->input('day');
+        $start = $request->input('start');
+        $end = $request->input('end');
 
-        $day = 1;
-        $start = 900;
-        $end = 1300;
+        $this->validate($request, [
+            'day' => "required|in_array:$this->days",
+            'start' => "required|in_array:$this->hours",
+            'end' => "required|min:$start|in_array:$this->hours"
+        ]);
+
 //        $user = Auth::user();
         $user = User::first();
         $friends = $user->friends()->get();
@@ -37,7 +51,6 @@ class FriendBreakController extends Controller
                 $schedules = $course->teachers()->where('course_teacher.day', '=', $day)->get();
                 foreach ($schedules as $schedule) {
                     $scheduleArray[$userFriend->id] = $schedule->pivot;
-//                    var_dump($userFriend->id);
                 }
             }
         }
