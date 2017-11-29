@@ -6,7 +6,6 @@ use App\User;
 use App\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Controller class that manages all friends of each user of the FindFriend
@@ -37,9 +36,7 @@ class FriendController extends Controller
      */
     public function index()
     {
-        $userid = Auth::user()->id;
-
-        $friends = User::find($userid)
+        $friends =  User::find(Auth::user()->id)
             ->friends()
             ->join("users", "friends.receiver_id", "=", "users.id")
             ->paginate(10);
@@ -49,24 +46,28 @@ class FriendController extends Controller
 
     public function destroy(Friend $friend)
     {
-        $friend_record = Friend::where('user_id', Auth::user()->id)
-            ->where('receiver_id', $friend->id)
-            ->first();
-
-        $this->authorize('destroy', $friend_record);
-
-        $friend_record->delete();
-
-        if($friend->confirmed) {
-            $otherRecord = User::find($friend->id)
+        if($friend !== null) {
+            $friend_record = User::find(Auth::user()->id)
                 ->friends()
-                ->where("user_id", $friend->id)
-                ->where("receiver_id", Auth::user()->id)
-                ->get();
-            $otherRecord[0]->delete();
+                ->where("receiver_id", $friend->id)
+                ->first();
+            if($friend_record !== null) {
+                $this->authorize('destroy', $friend_record);
+
+                $friend_record->delete();
+
+                if (!$friend->confirmed) {
+                    $otherRecord = User::find($friend->id)
+                        ->friends()
+                        ->where("receiver_id", Auth::user()->id)
+                        ->first();
+                    $otherRecord->delete();
+                }
+            }
         }
         return redirect('friends');
     }
+
 
     public function store(Request $request)
     {
