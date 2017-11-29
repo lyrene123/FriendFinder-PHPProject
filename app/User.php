@@ -33,13 +33,13 @@ class User extends Authenticatable
     }
 
     public function courses() {
-        return $this->belongsToMany('App\Course')->using('App\CourseUser');
+        return $this->belongsToMany('App\Course')->withPivot('user_id', 'course_id')->withTimestamps();
     }
 
     public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
     {
         if($parent instanceof Course){
-            return new CourseUser($parent, $attributes, $table, $exists, $using);
+            return new CourseUser($attributes);
         }
         return parent::newPivot($parent, $attributes, $table, $exists, $using);
     }

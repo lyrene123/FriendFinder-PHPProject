@@ -56,12 +56,11 @@
                                 </thead>
                                 <tbody>
                                     @foreach($users as $user)
-                                        {{ var_dump($user) }}
-                                        {{--<tr>--}}
-                                            {{--<td>{{ $user->firstname }}</td>--}}
-                                            {{--<td>{{ $user->lastname }}</td>--}}
-                                            {{--<td>{{ $user->email }}</td>--}}
-                                        {{--</tr>--}}
+                                        <tr>
+                                            <td>{{ $user->firstname }}</td>
+                                            <td>{{ $user->lastname }}</td>
+                                            <td>{{ $user->email }}</td>
+                                        </tr>
                                     @endforeach;
                                 </tbody>
                             </table>
