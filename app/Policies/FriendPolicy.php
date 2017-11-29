@@ -32,18 +32,14 @@ class FriendPolicy
         //this must return true
         $found = User::find($user->id)
             ->friends()
-            ->where('receiver_id', $friend->receiver_id)
+            ->where('receiver_id', $friend->user_id)
             ->first();
 
         //cannot unfriend yourself
         //this must return false
-        $isYourself = $user->id === $friend->receiver_id;
+        $isYourself = $user->id === $friend->user_id;
 
-        //must be who you say you are
-        //this must be true
-        $isAuthenticated = $user->id === $friend->user_id;
-
-        return $found && !$isYourself && $isAuthenticated;
+        return $found && !$isYourself;
     }
 
     public function add(User $user, User $userToAdd)
