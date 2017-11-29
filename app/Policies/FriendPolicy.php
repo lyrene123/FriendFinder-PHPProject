@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\User;
 use App\Friend;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class FriendPolicy
 {
@@ -59,5 +60,21 @@ class FriendPolicy
         $isYourself = $user->id === $userToAdd->id;
 
         return !$found && !$isYourself;
+    }
+
+    public function accept(User $user, User $userRequesting){
+
+        //can only accept a request existing in the db and that is intended for you
+        //this must return a record if valid
+        $found = Friend::where("user_id", $userRequesting->id)
+            ->where("receiver_id", Auth::user()->id)
+            ->first();
+
+        //returns true if valid
+        return $found !== null;
+    }
+
+    public function decline(User $user, Friend $friend){
+
     }
 }

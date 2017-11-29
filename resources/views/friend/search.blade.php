@@ -104,7 +104,7 @@
                                         @endfor
                                         </tbody>
                                     </table>
-                                    {!! $users->appends(request()->query())->links() !!}
+                                    {!! $users->appends(request()->query())->render() !!}
                                 @endif
                                 @if (isset($users) && count($users) === 0)
                                     <div class="panel-heading">

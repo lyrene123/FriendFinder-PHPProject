@@ -63,7 +63,6 @@ class FriendController extends Controller
                 if($otherRecord !== null) {
                     $otherRecord->delete();
                 }
-
             }
         }
         return redirect('friends');
