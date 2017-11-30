@@ -31,3 +31,4 @@ Route::delete('/requests/decline/{user}', 'FriendRequestController@decline')->mi
 Route::get('/friendbreak', 'FriendBreakController@index'); // this is only because I need to manually view it
 Route::post('/friendbreak/search', 'FriendBreakController@search');
 
+Route::get('/coursemanager', 'CourseManagerController@index')->middleware('auth')->name('coursemanager');
