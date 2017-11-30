@@ -36,8 +36,6 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Course')->using('App\CourseUser');
     }
 
-
-
     public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
     {
         if($parent instanceof Course){

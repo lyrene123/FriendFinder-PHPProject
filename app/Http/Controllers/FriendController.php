@@ -86,7 +86,7 @@ class FriendController extends Controller
                 ->where("receiver_id", Auth::user()->id)
                 ->first();
 
-            //if no other record, then don't delete
+            //delete other record only id it exists
             if($otherRecord !== null) {
                 $otherRecord->delete();
             }

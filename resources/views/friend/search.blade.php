@@ -78,7 +78,7 @@
                                                 <!-- add friend button or unfriend button only if user is not you -->
                                                 @if ($users[$i]['isFriends'] && $users[$i]['user']->id !== \Illuminate\Support\Facades\Auth::user()->id)
                                                     <td>
-                                                        <form action="{{url('friend/' . $users[$i]['user']->id)}}" method="POST">
+                                                        <form action="{{url('/friend/' . $users[$i]['user']->id)}}" method="POST">
                                                             {{ method_field('DELETE') }}
                                                             {{ csrf_field() }}
 
