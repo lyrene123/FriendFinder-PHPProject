@@ -71,26 +71,29 @@ class SearchFriendController extends Controller
 
         //put an empty string if no first name input provided
         $fname = $request->input("fname");
-        if($fname === null){
+        /*if($fname === null){
             $fname = "";
-        }
+        }*/
 
         //put an empty string if no last name input provided
         $lname = $request->input("lname");
-        if($lname === null){
+       /* if($lname === null){
             $lname = "";
-        }
+        }*/
 
         //search for matches
         $users = User::where('firstname', 'like', "%$fname%")
             ->where('lastname', 'like', "%$lname%")
-            ->paginate(10);
+            ->get();
 
         //construct the array result containing the list of users and boolean whether or not they are friends
         $usersArr = $this->constructSearchResultArr($users);
 
+      //  $col = new Collection($usersArr);
+        //$col->paginate(2);
+
         //construct the pagination
-        $users_paginated = $this->constructPagination($usersArr, 10);
+        $users_paginated = $this->constructPagination($usersArr);
         return view('friend.search', ['users' => $users_paginated]);
     }
 
@@ -147,7 +150,9 @@ class SearchFriendController extends Controller
             //add the combination user-boolean
             $usersArr[$i] = $item;
         }
-        return $usersArr;
+       // return $usersArr;
+
+        return $users->toArray();
     }
 
     /**
@@ -161,11 +166,13 @@ class SearchFriendController extends Controller
      * @param $perPage the number of data to show per page
      * @return LengthAwarePaginator Pagination object
      */
-    private function constructPagination($dataArr, $perPage){
+    private function constructPagination($dataArr){
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $col = new Collection($dataArr);
-        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
-        $entries = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage);
+        $perPage = 1;
+        $currentPageSearchResults = array_slice($dataArr,($currentPage - 1) * $perPage, $perPage, true);
+        $entries = new LengthAwarePaginator($col->forPage($currentPage, $perPage), $col->count(), $perPage, $currentPage);
+        $entries->setPath(LengthAwarePaginator::resolveCurrentPath());
         return $entries;
     }
 }

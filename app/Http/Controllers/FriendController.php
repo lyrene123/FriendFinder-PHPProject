@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Friend;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -96,5 +98,24 @@ class FriendController extends Controller
             return Redirect::to('/friends')->with('messages', "$user_friend->firstname $user_friend->lastname is no longer your friend");
         }
         return redirect('friends');
+    }
+
+    /**
+     * Creates Pagination for a given data array and with a number of records
+     * per page to display
+     *
+     * Solution based on
+     * http://blog.hazaveh.net/2016/03/laravel-5-manual-pagination-from-array/
+     *
+     * @param $dataArr the array of data
+     * @param $perPage the number of data to show per page
+     * @return LengthAwarePaginator Pagination object
+     */
+    private function constructPagination($dataArr, $perPage){
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($dataArr);
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $entries = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage);
+        return $entries;
     }
 }
