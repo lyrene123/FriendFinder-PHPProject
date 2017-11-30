@@ -6,6 +6,42 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Course Manager</div>
+                    <div class="panel-body">
+                        @if(isset($registered_courses))
+                            <h3 class="text-center">Hello, {{ $registered_courses[0]->firstname }}</h3>
+                            @if(count($registered_courses) > 0)
+                                <table class="table table-striped task-table">
+                                    <thead>
+                                        <th>Class ID</th>
+                                        <th>Section</th>
+                                        <th>Title</th>
+                                        <th></th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($registered_courses as $course)
+                                            <tr>
+                                                <td>{{ $course->class }}</td>
+                                                <td>{{ $course->section }}</td>
+                                                <td>{{ $course->title }}</td>
+                                                <td>
+                                                    <form action="{{ url('task/'.$task->id) }}" method="POST">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('DELETE') }}
+
+                                                        <button type="submit" id="delete-task-{{ $task->id }}" class="btn btn-danger">
+                                                            <i class="fa fa-btn fa-trash"></i>Delete
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach;
+                                    </tbody>
+                                </table>
+                            @else
+                                <h3 class="text-center">You have not registered for any courses</h3>
+                            @endif
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
