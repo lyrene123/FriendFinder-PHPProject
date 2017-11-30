@@ -42,37 +42,63 @@
                             @endif
                         @endif
                     </div>
-                    <div class="panel-heading">Register for a course</div>
+                    <div class="panel-heading"><h3 class="text-center">Register for a Course</h3></div>
                     <div class="panel-body">
-                        @if(isset($available_courses) && count($available_courses) > 0)
-                            <table class="table table-striped task-table">
-                                <thead>
-                                    <th>Class ID</th>
-                                    <th>Section</th>
-                                    <th>Title</th>
-                                    <th></th>
-                                </thead>
-                                <tbody>
-                                    @foreach($available_courses as $course)
+                        <div class="input-group custom-search-form">
+                            <form action="{{ url('coursemanager/search') }}" method="GET">
+                                <input type="text" class="form-control" name="search_input" placeholder="Details...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default-sm" type="submit" id="search-courses">
+                                        <i class="fa fa-search">Search for Course</i>
+                                    </button>
+                                </span>
+                            </form>
+                        </div>
+                        <h4 class="text-center">Found Courses</h4>
+                        <table class="table table-striped task-table">
+                            <thead>
+                                <th>Class ID</th>
+                                <th>Section</th>
+                                <th>Title</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                @if(isset($search_class) && count($search_class) > 0)
+                                    @foreach($search_class as $c)
                                         <tr>
-                                            <td>{{ $course->class }}</td>
-                                            <td>{{ $course->section }}</td>
-                                            <td>{{ $course->title }}</td>
+                                            <td>{{ $c->class }}</td>
+                                            <td>{{ $c->section }}</td>
+                                            <td>{{ $c->title }}</td>
                                             <td>
-                                                <form action="{{ url('coursemanager/add/'.$course->course_id) }}" method="POST">
+                                                <form action="{{ url('coursemanager/add/'.$c->id) }}" method="POST">
                                                     {{ csrf_field() }}
-
-                                                    <button type="submit" id="add-registered-course-{{ $course->course_id }}" class="btn btn-danger">
-                                                        <i class="fa fa-btn fa-trash"></i>Add Course
+                                                    <button type="submit" id="add-registered-course-{{ $c->id }}" class="btn btn-success">
+                                                        <i class="fa fa-btn fa-trash">Add Course</i>
                                                     </button>
                                                 </form>
                                             </td>
                                         </tr>
                                     @endforeach
-                                </tbody>
-
-                            </table>
-                        @endif
+                                @endif
+                                @if(isset($search_title) && count($search_title) > 0)
+                                    @foreach($search_title as $t)
+                                        <tr>
+                                            <td>{{ $t->class }}</td>
+                                            <td>{{ $t->section }}</td>
+                                            <td>{{ $t->title }}</td>
+                                            <td>
+                                                <form action="{{ url('coursemanager/add/'.$t->id) }}" method="POST">
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" id="add-registered-course-{{ $t->id }}" class="btn btn-success">
+                                                        <i class="fa fa-btn fa-trash">Add Course</i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
