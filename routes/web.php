@@ -32,4 +32,5 @@ Route::get('/friendbreak', 'FriendBreakController@index'); // this is only becau
 Route::post('/friendbreak/search', 'FriendBreakController@search');
 
 Route::get('/coursemanager', 'CourseManagerController@index')->middleware('auth')->name('coursemanager');
+Route::post('/coursemanager/add/{course}', 'CourseManagerController@add')->middleware('auth');
 Route::delete('/coursemanager/{course}', 'CourseManagerController@drop')->middleware('auth');

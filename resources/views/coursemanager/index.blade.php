@@ -42,6 +42,38 @@
                             @endif
                         @endif
                     </div>
+                    <div class="panel-heading">Register for a course</div>
+                    <div class="panel-body">
+                        @if(isset($available_courses) && count($available_courses) > 0)
+                            <table class="table table-striped task-table">
+                                <thead>
+                                    <th>Class ID</th>
+                                    <th>Section</th>
+                                    <th>Title</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    @foreach($available_courses as $course)
+                                        <tr>
+                                            <td>{{ $course->class }}</td>
+                                            <td>{{ $course->section }}</td>
+                                            <td>{{ $course->title }}</td>
+                                            <td>
+                                                <form action="{{ url('coursemanager/add/'.$course->course_id) }}" method="POST">
+                                                    {{ csrf_field() }}
+
+                                                    <button type="submit" id="add-registered-course-{{ $course->course_id }}" class="btn btn-danger">
+                                                        <i class="fa fa-btn fa-trash"></i>Add Course
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

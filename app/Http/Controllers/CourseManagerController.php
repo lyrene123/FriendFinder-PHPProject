@@ -25,7 +25,15 @@ class CourseManagerController extends Controller
             ->join("courses", "courses.id", "=", "course_user.course_id")
             ->paginate(10);
 
-        return view('coursemanager.index', ['registered_courses' => $registered_courses]);
+        $available_courses = Course::select('class', 'section', 'title')
+            ->paginate(10);
+
+        return view('coursemanager.index', ['registered_courses' => $registered_courses,
+            'available_courses' => $available_courses]);
+    }
+
+    public function add(Request $request, Course $course){
+        return redirect('/coursemanager');
     }
 
     public function drop(Request $request, Course $course){
