@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Course;
+use App\CourseUser;
 use App\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +29,14 @@ class CourseManagerController extends Controller
     }
 
     public function drop(Request $request, Course $course){
+        $this->authorize('drop', $course);
 
+        $registered_course = CourseUser::select('id')
+            ->where('user_id', Auth::user()->id)
+            ->where('course_id', $course->id);
+
+        $registered_course->delete();
+
+        return redirect('/coursemanager');
     }
 }

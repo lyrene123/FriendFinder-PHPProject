@@ -24,11 +24,11 @@
                                                 <td>{{ $course->section }}</td>
                                                 <td>{{ $course->title }}</td>
                                                 <td>
-                                                    <form action="{{ url('task/'.$task->id) }}" method="POST">
+                                                    <form action="{{ url('coursemanager/'.$course->course_id) }}" method="POST">
                                                         {{ csrf_field() }}
                                                         {{ method_field('DELETE') }}
 
-                                                        <button type="submit" id="delete-task-{{ $task->id }}" class="btn btn-danger">
+                                                        <button type="submit" id="delete-registered-course-{{ $course->course_id }}" class="btn btn-danger">
                                                             <i class="fa fa-btn fa-trash"></i>Delete
                                                         </button>
                                                     </form>
