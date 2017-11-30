@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Course;
 use App\CourseUser;
+use App\Teacher;
 use App\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,20 +48,43 @@ class CourseManagerController extends Controller
             ->paginate(20);
 
         $this->validate($request, ['search_input' => 'required',]);
-
         $input = $request->input("search_input");
 
-        $search_class = Course::select('class', 'section', 'title')
+        $search_class = Course::select('id', 'class', 'section', 'title')
             ->where('class', 'like', '%'.$input.'%')
             ->paginate(20);
-        $search_title = Course::select('class', 'section', 'title')
+
+        $search_title = Course::select('id', 'class', 'section', 'title')
             ->where('title', 'like', '%'.$input.'%')
             ->paginate(20);
 
-        //$search_teacher = Course:: select('class', 'section', 'title')
+        $search_teacher = Course::select('courses.id AS cid', 'class', 'section', 'title', 'name')
+            ->where('teachers.name', 'like', '%'.$input.'%')
+            ->join("course_teacher", "course_teacher.course_id", "=", "course_id")
+            ->join("teachers", "teachers.id", "=", "course_teacher.teacher_id")
+            ->paginate(30);
+
+     //   $teachers = Teacher::where('name', 'like', '%'.$input.'%')->get();
+
+     //   $courses = array();
+     //   foreach($teachers as $teacher){
+     //       $tempCourses = $teacher->courses()->get();
+      //      foreach($tempCourses as $course) {
+     //           $courses[] = $course->pivot;
+    //        }
+    //    }
+
+    //    $course_ids = array();
+     //   $display_courses = array();
+     //   foreach($courses as $c){
+     //       if(!isset($course_ids[$c->course_id])){
+     //           $course_ids = $c->course_id;
+     //           $display_courses = $c;
+     //       }
+    //    }
 
         return view('coursemanager.index', ['registered_courses' => $registered_courses,
-            'search_class' => $search_class, 'search_title' => $search_title,]);
+            'search_class' => $search_class, 'search_title' => $search_title, 'search_teacher' => $search_teacher]);
     }
 
     /**
@@ -81,6 +105,11 @@ class CourseManagerController extends Controller
     }
 
     public function add(Request $request, Course $course){
+
+        $enrollment_course = Courseuser::firstOrCreate([
+            'user_id' => Auth::user()->id,
+            'course_id' => $course->id,
+        ]);
 
         return redirect('/coursemanager');
     }
