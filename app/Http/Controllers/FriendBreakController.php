@@ -118,7 +118,8 @@ class FriendBreakController extends Controller
      */
     private function isUserOnBreak($friendScheduleOfADay, $start, $end) {
         $prevEnd = 2400;
-        $firstCourse = $friendScheduleOfADay[0];
+
+        $firstCourse = isset($friendScheduleOfADay[0]) ? $friendScheduleOfADay[0] : 0;
         foreach ($friendScheduleOfADay as $schedule) {
             $courseStart = $schedule->start;
             $courseEnd = $schedule->end;
