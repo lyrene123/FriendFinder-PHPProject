@@ -18,7 +18,8 @@
                 </div>
                 <div>
                     @if (Auth::check())
-                        <a href=" {{ route('friends') }} ">Manage your friends</a>
+                        <section><a href=" {{ route('friends') }} ">Manage your friends</a></section>
+                        <section><a href=" {{ route('coursemanager') }}">Manage your courses</a></section>
                     @endif
                 </div>
             </div>
