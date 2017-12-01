@@ -133,7 +133,7 @@ class ApiController extends Controller
      * @param $end
      * @return array of user models who are on break
      */
-    private function findFriendsOnBreak(array $friends, $day, $start, $end) {
+    private function findFriendsOnBreak($friends, $day, $start, $end) {
         $users = array();
         foreach($friends as $friend) {
             $userFriend = User::find($friend->receiver_id);
@@ -157,14 +157,14 @@ class ApiController extends Controller
      * @return true if the friend is on break
      */
     private function isUserOnBreak($friendScheduleOfADay, $start, $end) {
-        $prevEnd = 2400;
+        $prevEnd = 0;
+        $firstCourse = $friendScheduleOfADay[0];
         foreach ($friendScheduleOfADay as $schedule) {
             $courseStart = $schedule->start;
             $courseEnd = $schedule->end;
             $diff = $courseStart - $prevEnd;
             $prevEnd = $courseEnd;
-
-            if ($start >= $courseStart && $end <= $courseEnd && $diff <= 0)
+            if ($start >= $firstCourse->start && $end <= $courseEnd && $diff <= 0)
                 return false;
         }
         return true;
