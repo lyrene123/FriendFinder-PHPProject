@@ -71,15 +71,9 @@ class SearchFriendController extends Controller
 
         //put an empty string if no first name input provided
         $fname = $request->input("fname");
-        /*if($fname === null){
-            $fname = "";
-        }*/
 
         //put an empty string if no last name input provided
         $lname = $request->input("lname");
-       /* if($lname === null){
-            $lname = "";
-        }*/
 
         //search for matches
         $users = User::where('firstname', 'like', "%$fname%")
@@ -88,9 +82,6 @@ class SearchFriendController extends Controller
 
         //construct the array result containing the list of users and boolean whether or not they are friends
         $usersArr = $this->constructSearchResultArr($users);
-
-      //  $col = new Collection($usersArr);
-        //$col->paginate(2);
 
         //construct the pagination
         $users_paginated = $this->constructPagination($usersArr);
