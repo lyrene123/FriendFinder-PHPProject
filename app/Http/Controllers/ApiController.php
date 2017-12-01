@@ -138,7 +138,7 @@ class ApiController extends Controller
         foreach($friends as $friend) {
             $userFriend = User::find($friend->receiver_id);
             $courses = $userFriend->courses()->get();
-            $schedulesOfADay = $this->findSchedulesOfADay($courses, $day, $start, $end);
+            $schedulesOfADay = $this->findSchedules($courses, $day, $start, $end);
             if ($this->isUserOnBreak($schedulesOfADay, $start, $end)) {
                 $users[$userFriend->id] = $userFriend;
             }
@@ -171,13 +171,15 @@ class ApiController extends Controller
     }
 
     /**
-     * Find all the schedules of a given day order by the start time.
+     * Find all the schedules that are close to start and end time. For example,
+     * if start time is 1030, end time is 1200, and the courses of that day are
+     * from 1000 to 1300, this will return that course order by the start time.
      *
      * @param $courses - array of Course object
      * @param $day - integer of day (1 - 5)
      * @return array of all the schedule order by start time
      */
-    private function findSchedulesOfADay($courses, $day, $start, $end) {
+    private function findSchedules($courses, $day, $start, $end) {
         $scheduleArray = array();
         foreach ($courses as $course) {
             $schedules = $course->teachers()
