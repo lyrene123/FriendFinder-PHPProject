@@ -70,32 +70,32 @@
                                            <tr>
                                                 <!--First name and last name-->
                                                    <td class="table-text">
-                                                        <strong>{{ $user['user']->firstname }}</strong>
-                                                        <strong>{{ $user['user']->lastname }}</strong>
+                                                        <strong>{{ $user['firstname'] }}</strong>
+                                                        <strong>{{ $user['lastname'] }}</strong>
                                                     </td>
                                                     <!-- program of each user -->
                                                     <td>
-                                                        <strong>{{ $user['user']->program }}</strong>
+                                                        <strong>{{ $user['program'] }}</strong>
                                                     </td>
                                                     <!-- add friend button or unfriend button only if user is not you -->
-                                                  @if ($user['isFriends'] && $user['user']->id !== \Illuminate\Support\Facades\Auth::user()->id)
+                                                  @if ($user['isFriends'] && $user['id'] !== \Illuminate\Support\Facades\Auth::user()->id)
                                                         <td>
-                                                            <form action="{{url('/friend/' . $user['user']->id)}}" method="POST">
+                                                            <form action="{{url('/friend/' . $user['id'])}}" method="POST">
                                                                 {{ method_field('DELETE') }}
                                                                 {{ csrf_field() }}
 
-                                                                <button type="submit" id="delete-friend-{{ $user['user']->id }}" class="btn btn-danger">
+                                                                <button type="submit" id="delete-friend-{{ $user['id'] }}" class="btn btn-danger">
                                                                     <i class="fa fa-btn fa-trash"></i>Unfriend
                                                                 </button>
                                                             </form>
                                                         </td>
                                                     @endif
-                                                    @if (!$user['isFriends'] && $user['user']->id !== \Illuminate\Support\Facades\Auth::user()->id)
+                                                    @if (!$user['isFriends'] && $user['id'] !== \Illuminate\Support\Facades\Auth::user()->id)
                                                         <td>
-                                                            <form action="{{url('search/add/' . $user['user']->id)}}" method="POST">
+                                                            <form action="{{url('search/add/' . $user['id'])}}" method="POST">
                                                                 {{ csrf_field() }}
 
-                                                                <button type="submit" id="add-user-{{ $user['user']->id }}" class="btn btn-success">
+                                                                <button type="submit" id="add-user-{{ $user['id'] }}" class="btn btn-success">
                                                                     <i class="fa fa-btn fa-plus"></i>Add Friend
                                                                 </button>
                                                             </form>

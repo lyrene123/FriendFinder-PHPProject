@@ -70,15 +70,15 @@ class FriendPolicy
     {
         //can only add a friend that's not your friend
         //this must return false (no record found)
-        $found = $user->friends()
+       /* $found = $user->friends()
             ->where('receiver_id', $userToAdd->id)
-            ->first();
+            ->first();*/
 
         //cannot add yourself as a friend
-        //this must return false
-        $isYourself = $user->id === $userToAdd->id;
+        //this must return true to be valid
+        $isYourself = $user->id !== $userToAdd->id;
 
-        return $found === null && !$isYourself;
+        return $isYourself;
     }
 
     /**

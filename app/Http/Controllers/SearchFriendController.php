@@ -92,7 +92,8 @@ class SearchFriendController extends Controller
      * Handles the accept action of the logged in user when clicking on the Add Friend
      * button for a specific user in the search result.
      * Verifies first if the logged in user is authorized to add the new user as a friend
-     * Redirects to the friends page with a validation message for the user
+     * Redirects to the friends page with a validation message for the user if new friend added
+     * Redirects to the friends page with another message if the user is already friends with logged in user
      *
      * @param User $user
      * @return mixed
@@ -100,18 +101,45 @@ class SearchFriendController extends Controller
     public function add(User $user){
         if($user !== null ){
             $this->authorize('add', $user);
-            $found = Friend::firstOrCreate([
-                'user_id' => Auth::user()->id,
-                'receiver_id' => $user->id,
-                'confirmed' => false,
-            ]);
+            if($this->isFriends($user)){
+                return Redirect::to('/friends')->with('messages', "$user->firstname $user->lastname is already your friend 
+                or has sent you a friend request already");
+            } else {
+                $found = Friend::firstOrCreate([
+                    'user_id' => Auth::user()->id,
+                    'receiver_id' => $user->id,
+                    'confirmed' => false,
+                ]);
+                return Redirect::to('/friends')->with('messages', "A request is sent to $user->firstname $user->lastname");
+            }
         }
-        return Redirect::to('/friends')->with('messages', "A request is sent to $user->firstname $user->lastname");
+
+    }
+
+    /**
+     * Verifies if an input user is already friends with the logged in user.
+     *
+     * @param User $user User to check if already friends with logged in user
+     * @return bool true or false whether already friends
+     */
+    private function isFriends(User $user){
+        $isAlreadyFriends1 = User::find(Auth::user()->id)
+            ->friends()
+            ->where('receiver_id', $user->id)
+            ->first();
+        $isAlreadyFriends2 = User::find($user->id)
+            ->friends()
+            ->where('receiver_id', Auth::user()->id)
+            ->first();
+        if(isset($isAlreadyFriends1) || isset($isAlreadyFriends2)){
+            return true;
+        }
+        return false;
     }
 
     /**
      * Helper method to construct the search result array that will contain the
-     * Users objects and a boolean whether or not a user is already friends with
+     * User's first and last name, id, program and a boolean whether or not a user is already friends with
      * the logged in user
      *
      * @param $users
@@ -123,7 +151,10 @@ class SearchFriendController extends Controller
         //loop through the users object matching the search criteria
         for($i = 0; $i < count($users); $i = $i + 1){
             $item = array();
-            $item['user'] =  $users[$i]; //add a User object
+            $item['firstname'] =  $users[$i]->firstname;
+            $item['lastname'] =  $users[$i]->lastname;
+            $item['program'] =  $users[$i]->program;
+            $item['id'] =  $users[$i]->id;
 
             //check if the user is already friends or not
             $found = User::find(Auth::user()->id)
@@ -138,7 +169,7 @@ class SearchFriendController extends Controller
                 $item['isFriends'] = false;
             }
 
-            //add the combination user-boolean
+            //add item array
             $usersArr[$i] = $item;
         }
         return $usersArr;
