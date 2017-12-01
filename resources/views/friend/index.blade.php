@@ -54,7 +54,7 @@
 
 
                                                     <td>
-                                                        <form action="{{url('friend/' . $friend->id)}}" method="POST">
+                                                        <form action="{{url('/friend/' . $friend->id)}}" method="POST">
                                                             {{ method_field('DELETE') }}
                                                             {{ csrf_field() }}
 
