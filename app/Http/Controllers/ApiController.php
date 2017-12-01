@@ -156,7 +156,7 @@ class ApiController extends Controller
      * @return true if the friend is on break
      */
     private function isUserOnBreak($friendScheduleOfADay, $start, $end) {
-        $prevEnd = 0;
+        $prevEnd = 2400;
         $firstCourse = $friendScheduleOfADay[0];
         foreach ($friendScheduleOfADay as $schedule) {
             $courseStart = $schedule->start;
