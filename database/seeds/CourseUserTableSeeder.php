@@ -25,12 +25,12 @@ class CourseUserTableSeeder extends Seeder
 
         CourseUser::create([
             'user_id' => 2,
-            'course_id' => 2
+            'course_id' => 1
         ]);
 
         CourseUser::create([
             'user_id' => 2,
-            'course_id' => 4
+            'course_id' => 3
         ]);
     }
 }

@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\CourseUser;
 
 class Course extends Model
 {
     protected $fillable = ["class", "section", "title",];
-    
+
+
     public function users(){
         return $this->belongsToMany("App\User")->using("App\CourseUser");
     }
