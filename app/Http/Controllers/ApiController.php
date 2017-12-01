@@ -19,6 +19,7 @@ class ApiController extends Controller
             $dataArray = User::where("email", $email)
                 ->first()
                 ->friends()
+                ->where("confirmed", true)
                 ->join("users", "friends.receiver_id", "=", "users.id")
                 ->get();
             $results = array();
