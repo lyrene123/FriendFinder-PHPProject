@@ -11,6 +11,10 @@
 |
 */
 
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'HomeController@index');
 
 Auth::routes();
@@ -29,5 +33,6 @@ Route::post('/requests/accept/{user}', 'FriendRequestController@accept')->middle
 Route::delete('/requests/decline/{user}', 'FriendRequestController@decline')->middleware('auth');
 
 Route::get('/friendbreak', 'FriendBreakController@index'); // this is only because I need to manually view it
-Route::post('/friendbreak/search', 'FriendBreakController@search');
+Route::get('/friendbreak/search', 'FriendBreakController@search');
+
 
