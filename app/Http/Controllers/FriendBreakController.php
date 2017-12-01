@@ -70,7 +70,7 @@ class FriendBreakController extends Controller
             }
 
             // Sort by start
-            usort($scheduleArray, function($a, $b) {
+            uasort($scheduleArray, function($a, $b) {
                 return $a->start - $b->start;
             });
 
@@ -89,7 +89,7 @@ class FriendBreakController extends Controller
             unset($scheduleArray);
         }
 
-        $users = $this->constructPagination($users, 1);
+//        $users = $this->constructPagination($users, 1);
         return view('friendbreak.index', ['users' => $users]);
     }
 
