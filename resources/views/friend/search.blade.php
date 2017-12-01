@@ -64,45 +64,45 @@
                                         <th>&nbsp;</th>
                                         </thead>
                                         <tbody>
-                                        @for($i = 0; $i < count($users); $i = $i + 1)
-                                            {{ var_dump($users[$i]) }}
-                                            {{Illuminate\Pagination\LengthAwarePaginator::resolveCurrentPage()}}
-                                           {{-- <tr>
+                                        @foreach($users as $user)
+                                            {{-- var_dump($users[$i]) --}}
+                                            {{--Illuminate\Pagination\LengthAwarePaginator::resolveCurrentPage()--}}
+                                           <tr>
                                                 <!--First name and last name-->
                                                    <td class="table-text">
-                                                        <strong>{{ $users[$i]['user']->firstname }}</strong>
-                                                        <strong>{{ $users[$i]['user']->lastname }}</strong>
+                                                        <strong>{{ $user['user']->firstname }}</strong>
+                                                        <strong>{{ $user['user']->lastname }}</strong>
                                                     </td>
                                                     <!-- program of each user -->
                                                     <td>
-                                                        <strong>{{ $users[$i]['user']->program }}</strong>
+                                                        <strong>{{ $user['user']->program }}</strong>
                                                     </td>
                                                     <!-- add friend button or unfriend button only if user is not you -->
-                                                  @if ($users[$i]['isFriends'] && $users[$i]['user']->id !== \Illuminate\Support\Facades\Auth::user()->id)
+                                                  @if ($user['isFriends'] && $user['user']->id !== \Illuminate\Support\Facades\Auth::user()->id)
                                                         <td>
-                                                            <form action="{{url('/friend/' . $users[$i]['user']->id)}}" method="POST">
+                                                            <form action="{{url('/friend/' . $user['user']->id)}}" method="POST">
                                                                 {{ method_field('DELETE') }}
                                                                 {{ csrf_field() }}
 
-                                                                <button type="submit" id="delete-friend-{{ $users[$i]['user']->id }}" class="btn btn-danger">
+                                                                <button type="submit" id="delete-friend-{{ $user['user']->id }}" class="btn btn-danger">
                                                                     <i class="fa fa-btn fa-trash"></i>Unfriend
                                                                 </button>
                                                             </form>
                                                         </td>
                                                     @endif
-                                                    @if (!$users[$i]['isFriends'] && $users[$i]['user']->id !== \Illuminate\Support\Facades\Auth::user()->id)
+                                                    @if (!$user['isFriends'] && $user['user']->id !== \Illuminate\Support\Facades\Auth::user()->id)
                                                         <td>
-                                                            <form action="{{url('search/add/' . $users[$i]['user']->id)}}" method="POST">
+                                                            <form action="{{url('search/add/' . $user['user']->id)}}" method="POST">
                                                                 {{ csrf_field() }}
 
-                                                                <button type="submit" id="add-user-{{ $users[$i]['user']->id }}" class="btn btn-success">
+                                                                <button type="submit" id="add-user-{{ $user['user']->id }}" class="btn btn-success">
                                                                     <i class="fa fa-btn fa-plus"></i>Add Friend
                                                                 </button>
                                                             </form>
                                                         </td>
                                                     @endif
-                                            </tr>--}}
-                                        @endfor
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                     {!! $users->appends($_GET)->render() !!}
