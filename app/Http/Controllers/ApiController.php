@@ -155,7 +155,7 @@ class ApiController extends Controller
             $courseStart = $schedule->start;
             $courseEnd = $schedule->end;
             $diff = $courseStart - $prevEnd;
-            if($diff > 0 && $start < $courseStart) {
+            if($diff > 0 && $start < $courseStart && $end >= $courseStart) {
                 return true;
             } else if($end > $courseEnd && $start >= $courseEnd) {
                 return true;
