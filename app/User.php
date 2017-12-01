@@ -32,11 +32,32 @@ class User extends Authenticatable
         return $this->hasMany('App\Friend');
     }
 
+    /**
+     * A user can have many coourse
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function courses() {
+        return $this->belongsToMany('App\Course')
+            ->withPivot('user_id', 'course_id')->withTimestamps();
+    }
+
+    /**
+     * If the parent is course, return a CourseUser pivot
+     *
+     * @param Model $parent
+     * @param array $attributes
+     * @param string $table
+     * @param bool $exists
+     * @param null $using
+     * @return CourseUser|\Illuminate\Database\Eloquent\Relations\Pivot
+     */
     public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
     {
         if($parent instanceof Course){
-            return new UserEnrollment($parent, $attributes, $table, $exists, $using);
+            return new CourseUser($attributes);
         }
         return parent::newPivot($parent, $attributes, $table, $exists, $using);
     }
+
 }

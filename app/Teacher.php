@@ -11,12 +11,33 @@ class Teacher extends Model
         "name",
     ];
 
-//    public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
-//    {
-//        if($parent instanceof Course){
-//            return new CourseSchedule($parent, $attributes, $table, $exists, $using);
-//        }
-//        return parent::newPivot($parent, $attributes, $table, $exists, $using);
-//    }
+    /**
+     * A teacher can have many courses. The CourseTeacher pivot also have day, start
+     * and end as a column
+     *
+     * @return $this
+     */
+    public function courses(){
+        return $this->belongsToMany("App\Course")
+            ->using("App\CourseTeacher")->withPivot('day', 'start', 'end');
+    }
+
+    /**
+     * If the parent is Course, return a CourseTeacher pivot
+     *
+     * @param Model $parent
+     * @param array $attributes
+     * @param string $table
+     * @param bool $exists
+     * @param null $using
+     * @return CourseTeacher|\Illuminate\Database\Eloquent\Relations\Pivot
+     */
+    public function newPivot(Model $parent, array $attributes, $table, $exists, $using = null)
+    {
+        if($parent instanceof Course){
+            return new CourseTeacher($attributes);
+        }
+        return parent::newPivot($parent, $attributes, $table, $exists, $using);
+    }
 
 }
