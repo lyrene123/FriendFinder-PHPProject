@@ -32,7 +32,9 @@ class CourseManagerController extends Controller
             ->join("courses", "courses.id", "=", "course_user.course_id")
             ->get();
 
-        return view('coursemanager.index', ['registered_courses' => $registered_courses,]);
+        $user = User::where("users.id", "=", Auth::user()->id)->get();
+
+        return view('coursemanager.index', ['registered_courses' => $registered_courses, 'user' => $user,]);
     }
 
     /**
@@ -46,6 +48,8 @@ class CourseManagerController extends Controller
             ->join("course_user", "course_user.user_id", "=", "users.id")
             ->join("courses", "courses.id", "=", "course_user.course_id")
             ->get();
+
+        $user = User::where("users.id", "=", Auth::user()->id)->get();
 
         $this->validate($request, ['search_input' => 'required',]);
         $input = $request->input("search_input");
@@ -71,7 +75,8 @@ class CourseManagerController extends Controller
             }
         }
 
-        return view('coursemanager.index', ['registered_courses' => $registered_courses, 'courses' => $courses,]);
+        return view('coursemanager.index', ['registered_courses' => $registered_courses, 'courses' => $courses,
+            'user' => $user,]);
     }
 
     /**

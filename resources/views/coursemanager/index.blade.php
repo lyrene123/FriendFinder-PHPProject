@@ -6,9 +6,9 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        @if(isset($registered_courses))
-                            <h3 class="text-center">Hello, {{ $registered_courses[0]->firstname }} here are your currently registered courses</h3>
-                            @if(count($registered_courses) > 0)
+                        @if(isset($user))
+                            <h3 class="text-center">Hello, {{ $user[0]->firstname }} here are your currently registered courses</h3>
+                            @if(isset($registered_courses) && count($registered_courses) > 0)
                                 <table class="table table-striped task-table">
                                     <thead>
                                         <th>Course ID</th>
