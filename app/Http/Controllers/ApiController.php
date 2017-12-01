@@ -14,6 +14,13 @@ class ApiController extends Controller
     private $hours;
     private $days;
 
+    /**
+     * ApiController constructor
+     *
+     * Initialize the default value of $days and $hours.
+     * $days have only 5 days from 1 to 5
+     * $hours start from 10am to 5pm
+     */
     public function __construct() {
         $this->hours = ['1000', '1030', '1100', '1130'
             , '1200', '1230', '1300', '1330', '1400', '1430', '1500', '1530', '1600'
@@ -111,7 +118,7 @@ class ApiController extends Controller
 
         $user = User::where('email', $request->input('email'))->first();
         $friends = $user->friends()->where('confirmed', true)->get();
-        $breakFriends = $this->findFrindsOnBreak($friends, $day, $start, $end);
+        $breakFriends = $this->findFriendsOnBreak($friends, $day, $start, $end);
 
         return response()->json($this->createJsonUser($breakFriends), 200);
     }
@@ -126,13 +133,13 @@ class ApiController extends Controller
      * @param $end
      * @return array of user models who are on break
      */
-    private function findFrindsOnBreak(array $friends, $day, $start, $end) {
+    private function findFriendsOnBreak(array $friends, $day, $start, $end) {
         $users = array();
         foreach($friends as $friend) {
             $userFriend = User::find($friend->receiver_id);
             $courses = $userFriend->courses()->get();
-            $schedulesOfADay = $this->findSchedulesOfADay($courses, $day);
-            if ($this->checkIfUserIsOnBreak($schedulesOfADay, $start, $end)) {
+            $schedulesOfADay = $this->findSchedulesOfADay($courses, $day, $start, $end);
+            if ($this->isUserOnBreak($schedulesOfADay, $start, $end)) {
                 $users[$userFriend->id] = $userFriend;
             }
             unset($schedulesOfADay);
@@ -149,20 +156,18 @@ class ApiController extends Controller
      * @param $end
      * @return true if the friend is on break
      */
-    private function checkIfUserIsOnBreak(array $friendScheduleOfADay, $start, $end) {
-        $prevEnd = 0;
-        foreach($friendScheduleOfADay as $schedule) {
+    private function isUserOnBreak($friendScheduleOfADay, $start, $end) {
+        $prevEnd = 2400;
+        foreach ($friendScheduleOfADay as $schedule) {
             $courseStart = $schedule->start;
             $courseEnd = $schedule->end;
             $diff = $courseStart - $prevEnd;
-            if($diff > 0 && $start < $courseStart && $end >= $courseStart) {
-                return true;
-            } else if($end > $courseEnd && $start >= $courseEnd) {
-                return true;
-            }
             $prevEnd = $courseEnd;
+
+            if ($start >= $courseStart && $end <= $courseEnd && $diff <= 0)
+                return false;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -172,10 +177,15 @@ class ApiController extends Controller
      * @param $day - integer of day (1 - 5)
      * @return array of all the schedule order by start time
      */
-    private function findSchedulesOfADay($courses, $day) {
+    private function findSchedulesOfADay($courses, $day, $start, $end) {
         $scheduleArray = array();
         foreach ($courses as $course) {
-            $schedules = $course->teachers()->where('course_teacher.day', '=', $day)->get();
+            $schedules = $course->teachers()
+                ->where('course_teacher.day', '=', $day)
+                ->where(function ($query) use ($start, $end){
+                    $query->whereRaw('? between course_teacher.start and course_teacher.end', [$start])
+                        ->orWhereRaw('? between course_teacher.start and course_teacher.end', [$end]);
+                })->get();
             foreach ($schedules as $schedule) {
                 $scheduleArray[] = $schedule->pivot;
             }

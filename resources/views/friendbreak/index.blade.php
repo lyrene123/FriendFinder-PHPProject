@@ -65,7 +65,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {!! $users->render() !!}
+                            {!! $users->appends($_GET)->render() !!}
                         @endif
                     </div>
                 </div>
