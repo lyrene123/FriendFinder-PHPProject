@@ -61,58 +61,21 @@
                                 <th>Class Name</th>
                                 <th>Section</th>
                                 <th>Title</th>
-                                <th>Teacher</th>
                                 <th></th>
                             </thead>
                             <tbody>
-                                @if(isset($search_class) && count($search_class) > 0)
-                                    @foreach($search_class as $c)
+                                @if(isset($courses) && count($courses) > 0)
+                                    @foreach($courses as $c)
                                         <tr>
                                             <td>{{ $c->id }}</td>
                                             <td>{{ $c->class }}</td>
                                             <td>{{ $c->section }}</td>
                                             <td>{{ $c->title }}</td>
+                                            <td></td>
                                             <td>
                                                 <form action="{{ url('coursemanager/add/'.$c->id) }}" method="POST">
                                                     {{ csrf_field() }}
                                                     <button type="submit" id="add-registered-course-{{ $c->cid }}" class="btn btn-success">
-                                                        <i class="fa fa-btn fa-trash">Add Course</i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                                @if(isset($search_title) && count($search_title) > 0)
-                                    @foreach($search_title as $t)
-                                        <tr>
-                                            <td>{{ $t->id }}</td>
-                                            <td>{{ $t->class }}</td>
-                                            <td>{{ $t->section }}</td>
-                                            <td>{{ $t->title }}</td>
-                                            <td>
-                                                <form action="{{ url('coursemanager/add/'.$t->id) }}" method="POST">
-                                                    {{ csrf_field() }}
-                                                    <button type="submit" id="add-registered-course-{{ $t->cid }}" class="btn btn-success">
-                                                        <i class="fa fa-btn fa-trash">Add Course</i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                                @if(isset($search_teacher) && count($search_teacher) > 0)
-                                    @foreach($search_teacher as $te)
-                                        <tr>
-                                            <td>{{ $te->cid }}</td>
-                                            <td>{{ $te->class }}</td>
-                                            <td>{{ $te->section }}</td>
-                                            <td>{{ $te->title }}</td>
-                                            <td>{{ $te->name }}</td>
-                                            <td>
-                                                <form action="{{ url('coursemanager/add/'.$te->cid) }}" method="POST">
-                                                    {{ csrf_field() }}
-                                                    <button type="submit" id="add-registered-course-{{ $te->cid }}" class="btn btn-success">
                                                         <i class="fa fa-btn fa-trash">Add Course</i>
                                                     </button>
                                                 </form>

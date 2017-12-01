@@ -30,7 +30,7 @@ class CourseManagerController extends Controller
             ->where("users.id", "=", Auth::user()->id)
             ->join("course_user", "course_user.user_id", "=", "users.id")
             ->join("courses", "courses.id", "=", "course_user.course_id")
-            ->paginate(20);
+            ->get();
 
         return view('coursemanager.index', ['registered_courses' => $registered_courses,]);
     }
@@ -45,46 +45,33 @@ class CourseManagerController extends Controller
             ->where("users.id", "=", Auth::user()->id)
             ->join("course_user", "course_user.user_id", "=", "users.id")
             ->join("courses", "courses.id", "=", "course_user.course_id")
-            ->paginate(20);
+            ->get();
 
         $this->validate($request, ['search_input' => 'required',]);
         $input = $request->input("search_input");
 
-        $search_class = Course::select('id', 'class', 'section', 'title')
-            ->where('class', 'like', '%'.$input.'%')
-            ->paginate(20);
+        $courses = array();
 
-        $search_title = Course::select('id', 'class', 'section', 'title')
-            ->where('title', 'like', '%'.$input.'%')
-            ->paginate(20);
+        $courses_by_name = Course::where('class', 'like', '%'.$input.'%')->get();
+        $courses_by_title = Course::where('title', 'like', '%'.$input.'%')->get();
 
-        $search_teacher = Course::select('courses.id AS cid', 'class', 'section', 'title', 'name')
-            ->where('teachers.name', 'like', '%'.$input.'%')
-            ->join("course_teacher", "course_teacher.course_id", "=", "course_id")
-            ->join("teachers", "teachers.id", "=", "course_teacher.teacher_id")
-            ->paginate(30);
+        foreach($courses_by_name as $cbn){
+            if(!in_array($cbn, $registered_courses)){
+                if($registered_courses->where('title', $cbn->title)->count() === 0){
+                    $courses[] = $cbn;
+                }
+            }
+        }
 
-     //   $teachers = Teacher::where('name', 'like', '%'.$input.'%')->get();
+        foreach($courses_by_title as $cbt){
+            if(!in_array($cbt, $courses)){
+                if($registered_courses->where('title', $cbt->title)->count() === 0){
+                    $courses[] = $cbt;
+                }
+            }
+        }
 
-     //   $courses = array();
-     //   foreach($teachers as $teacher){
-     //       $tempCourses = $teacher->courses()->get();
-      //      foreach($tempCourses as $course) {
-     //           $courses[] = $course->pivot;
-    //        }
-    //    }
-
-    //    $course_ids = array();
-     //   $display_courses = array();
-     //   foreach($courses as $c){
-     //       if(!isset($course_ids[$c->course_id])){
-     //           $course_ids = $c->course_id;
-     //           $display_courses = $c;
-     //       }
-    //    }
-
-        return view('coursemanager.index', ['registered_courses' => $registered_courses,
-            'search_class' => $search_class, 'search_title' => $search_title, 'search_teacher' => $search_teacher]);
+        return view('coursemanager.index', ['registered_courses' => $registered_courses, 'courses' => $courses,]);
     }
 
     /**
@@ -104,6 +91,11 @@ class CourseManagerController extends Controller
         return redirect('/coursemanager');
     }
 
+    /**
+     * @param Request $request
+     * @param Course $course
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function add(Request $request, Course $course){
 
         $enrollment_course = Courseuser::firstOrCreate([
