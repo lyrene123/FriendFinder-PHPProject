@@ -20,15 +20,19 @@ class CourseTeacherTableSeeder extends Seeder
 
         while(!feof($csv)){
             $linecsv = fgetcsv($csv);
-            if($linecsv !== false) {
+            if(isset($linecsv)) {
                 $day = trim($linecsv[4]);
                 $start = trim($linecsv[5]);
                 $end = trim($linecsv[6]);
 
                 $class = trim($linecsv[0]);
                 $teachername = trim($linecsv[3]);
-
-                $courseId = DB::table('courses')->where('class', '=', $class)->first()->id;
+                $section = trim($linecsv[1]);
+                $courseId = DB::table('courses')
+                    ->where('class', '=', $class)
+                    ->where('section', '=', $section)
+                    ->first()
+                    ->id;
                 $teacherId = DB::table('teachers')->where('name', '=', $teachername)->first()->id;
 
                 CourseTeacher::create([
