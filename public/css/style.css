@@ -15,3 +15,11 @@ label {
 .text-preserve {
     white-space: pre;
 }
+
+.d-inline {
+    display: inline;
+}
+.fillWidth {
+    width: 60%;
+    height: auto;
+}

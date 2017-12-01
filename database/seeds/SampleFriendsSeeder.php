@@ -69,6 +69,12 @@ class SampleFriendsSeeder extends Seeder
         ]);
 
         Friend::create([
+            'user_id' => 4,
+            'receiver_id' => 2,
+            'confirmed' => true
+        ]);
+
+        Friend::create([
             'user_id' => 2,
             'receiver_id' => 5,
             'confirmed' => false
