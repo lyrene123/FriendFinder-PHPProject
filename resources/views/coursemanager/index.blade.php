@@ -11,9 +11,9 @@
                             @if(isset($registered_courses) && count($registered_courses) > 0)
                                 <table class="table table-striped task-table">
                                     <thead>
-                                    <th>Class ID</th>
-                                    <th>Section</th>
-                                    <th>Title</th>
+                                        <th>Class ID</th>
+                                        <th>Section</th>
+                                        <th>Title</th>
                                     <th></th>
                                     </thead>
                                     <tbody>
@@ -33,7 +33,7 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach;
+                                    @endforeach
                                     </tbody>
                                 </table>
                             @else
@@ -45,14 +45,14 @@
                         <h3 class="text-center">Register for a Course</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="input-group custom-search-form">
+                        <div class="">
                             <form action="{{ url('coursemanager/search') }}" method="GET">
-                                <span class="input-group-btn">
+                                <div class="col-sm-5 col-sm-offset-2">
                                     <input type="text" class="form-control" name="search_input" placeholder="Details...">
-                                    <button class="btn btn-default-sm" type="submit" id="search-courses">
-                                        <i class="fa fa-search">Search for Course</i>
-                                    </button>
-                                </span>
+                                </div>
+                                <button class="btn btn-success" type="submit" id="search-courses">
+                                    <i class="fa fa-search"></i>Search for Course
+                                </button>
                             </form>
                         </div>
                         @if((isset($courses) && count($courses) > 0))

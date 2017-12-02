@@ -46,8 +46,8 @@
 
                                     <div class="form-group">
                                         <div class="col-sm-offset-3 col-sm-6">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fa fa-btn fa-plus"></i>Search
+                                            <button type="submit" class="btn btn-success">
+                                                <i class=""></i> Search
                                             </button>
                                         </div>
                                     </div>
@@ -56,7 +56,7 @@
                                 @if (isset($users) && count($users) > 0)
                                     <table class="table table-striped task-table">
                                         <thead>
-                                            <th class="text-center">Search results</th>
+                                            <th class="text-center"><h4>Search results</h4></th>
                                         </thead>
                                         <tbody>
                                         @foreach($users as $user)
@@ -90,7 +90,7 @@
                                                             <form action="{{url('search/add/' . $user['id'])}}" method="POST">
                                                                 {{ csrf_field() }}
 
-                                                                <button type="submit" id="add-user-{{ $user['id'] }}" class="btn btn-success">
+                                                                <button type="submit" id="add-user-{{ $user['id'] }}" class="btn btn-blue">
                                                                     <i class="fa fa-btn fa-plus"></i>Add Friend
                                                                 </button>
                                                             </form>
