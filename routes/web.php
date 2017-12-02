@@ -32,7 +32,7 @@ Route::get('/requests', 'FriendRequestController@index')->middleware('auth')->na
 Route::post('/requests/accept/{user}', 'FriendRequestController@accept')->middleware('auth');
 Route::delete('/requests/decline/{user}', 'FriendRequestController@decline')->middleware('auth');
 
-Route::get('/friendbreak', 'FriendBreakController@index'); // this is only because I need to manually view it
+Route::get('/friendbreak', 'FriendBreakController@index')->name('friendbreak'); // this is only because I need to manually view it
 Route::get('/friendbreak/search', 'FriendBreakController@search');
 
 

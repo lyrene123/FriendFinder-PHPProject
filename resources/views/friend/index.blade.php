@@ -5,29 +5,26 @@
     <div class="container">
         <div class="col-sm-offset-1 col-sm-10">
             @if(Auth::check())
-                <div class="row">
+                <div class="row padding-s">
                     <div class="col-lg-12 text-center">
-                        <h2 class="section-heading">Manage your friends</h2>
+                        <h2>Manage your friends</h2>
                     </div>
                 </div>
                 @include('common.messages')
-                <div id="main" class="row">
-                    <div id="sidebar" class="col-md-3">
-                        <nav id="sidebar-nav">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href=" {{ route('search') }} ">Search for friends</a></li>
-                                <li><a href="{{ route('requests') }}">View friend requests</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-
-                    <div id="content" class="col-md-9">
+                <div class="row">
+                    <div id="content" class="">
                         @if (isset($friends) && count($friends) > 0)
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Friends list
-                                </div>
                                 <div class="panel-body">
+                                    <div  class="padding-s">
+                                        <nav>
+                                            <ul class="nav nav-tabs">
+                                                <li class="nav-item active"><a href=" {{ route('friends') }} ">Friends</a></li>
+                                                <li class="nav-item"><a href=" {{ route('search') }} ">Search Friends</a></li>
+                                                <li class="nav-item"><a href="{{ route('requests') }}">Friend Request</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
                                     <table class="table table-striped task-table">
                                         <thead>
                                         <th>Here are your friends</th>
