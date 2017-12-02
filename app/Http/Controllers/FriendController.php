@@ -79,7 +79,7 @@ class FriendController extends Controller
             //check if logged in user is authorized to remove a friendship
             $this->authorize('destroy', $friend);
 
-            $friend->delete(); 
+            $friend->delete();
 
             //retrieve the other corresponding record in the two way friendship if applicable
             $otherRecord = User::find($friend->receiver_id)
