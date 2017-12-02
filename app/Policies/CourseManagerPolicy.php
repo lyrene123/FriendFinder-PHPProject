@@ -20,7 +20,8 @@ class CourseManagerPolicy
 
         $registered_course = CourseUser::select('id')
             ->where('user_id', $user->id)
-            ->where('course_id', $course->id);
+            ->where('course_id', $course->id)
+            ->get();
 
         if(isset($registered_course) && count($registered_course) === 1){
             return true;

@@ -189,7 +189,7 @@ class SearchFriendController extends Controller
     private function constructPagination($dataArr){
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $col = new Collection($dataArr);
-        $perPage = 2;
+        $perPage = 10;
         $entries = new LengthAwarePaginator($col->forPage($currentPage, $perPage), $col->count(), $perPage, $currentPage);
         $entries->setPath(LengthAwarePaginator::resolveCurrentPath());
         return $entries;

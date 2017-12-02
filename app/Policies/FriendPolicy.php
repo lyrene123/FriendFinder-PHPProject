@@ -35,7 +35,6 @@ class FriendPolicy
      * Verifies if the deletion of a Friend record
      * is authorized for the logged in user. The logged in user
      * can only unfriend someone if that person is a friend.
-     * A logged in user cannot unfriend themselves.
      *
      * @param User $user Logged in user
      * @param Friend $friend Friend record to delete
@@ -44,22 +43,17 @@ class FriendPolicy
     public function destroy(User $user, Friend $friend)
     {
         //can only unfriend someone if that person is your friend.
-        //this must return something
+        //this must return something to be valid
         $found = $user->friends()
-            ->where('receiver_id', $friend->user_id)
+            ->where('receiver_id', $friend->receiver_id)
             ->first();
 
-        //cannot unfriend yourself
-        //this must return false
-       // $isYourself = $user->id === $friend->user_id;
-
-        return $found !== null; //&& !$isYourself;
+        return $found !== null;
     }
 
     /**
      * Verifies if the adding of a a new user as a friend
-     * is authorized for the logged in user. The logged in user
-     * can only add a friend that's not already a friend.
+     * is authorized for the logged in user.
      * A logged in user cannot add themselves as a friend.
      *
      * @param User $user Logged in user
@@ -68,12 +62,6 @@ class FriendPolicy
      */
     public function add(User $user, User $userToAdd)
     {
-        //can only add a friend that's not your friend
-        //this must return false (no record found)
-       /* $found = $user->friends()
-            ->where('receiver_id', $userToAdd->id)
-            ->first();*/
-
         //cannot add yourself as a friend
         //this must return true to be valid
         $isYourself = $user->id !== $userToAdd->id;
