@@ -54,6 +54,11 @@ a {
     background-color: #EEEEFF;
 }
 
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-brand:hover {
+    color: #9FB4C7;
+    text-decoration: blink;
+}
+
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     color: #333;
     background-color: #ffffff;

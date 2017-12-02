@@ -49,7 +49,7 @@
                         @else
                             <li><a href=" {{ route('friends') }} ">Friends</a></li>
                             <li><a href=" {{ route('coursemanager') }}">Courses</a></li>
-                            <li><a href=" {{ route('friendbreak') }} ">Who free?</a></li>
+                            <li><a href=" {{ route('friendbreak') }} ">Who's free?</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                                     {{ Auth::user()->firstname }} {{Auth::user()->lastname }} <span class="caret"></span>
