@@ -38,11 +38,11 @@
                                             <tr>
                                                 <!--First name and last name of each friends-->
                                                 <td class="table-text">
-                                                    <strong>{{ $friend->firstname }}</strong>
-                                                    <strong>{{ $friend->lastname }}</strong>
+                                                    <strong>{{ $friend['firstname'] }}</strong>
+                                                    <strong>{{ $friend['lastname'] }}</strong>
                                                 </td>
 
-                                                @if($friend->confirmed === true)
+                                                @if($friend['confirmed'] === true)
                                                     <td>
                                                         <strong>CONFIRMED</strong>
                                                     </td>
@@ -54,11 +54,11 @@
 
 
                                                     <td>
-                                                        <form action="{{url('/friend/' . $friend->id)}}" method="POST">
+                                                        <form action="{{url('/friend/' . $friend['id'])}}" method="POST">
                                                             {{ method_field('DELETE') }}
                                                             {{ csrf_field() }}
 
-                                                            <button type="submit" id="delete-friend-{{ $friend->id }}" class="btn btn-danger">
+                                                            <button type="submit" id="delete-friend-{{ $friend['id'] }}" class="btn btn-danger">
                                                                 <i class="fa fa-btn fa-trash"></i>Unfriend
                                                             </button>
                                                         </form>

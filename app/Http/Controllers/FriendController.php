@@ -44,10 +44,20 @@ class FriendController extends Controller
     {
         $friends =  User::find(Auth::user()->id)
             ->friends()
-            ->join("users", "friends.receiver_id", "=", "users.id")
-            ->paginate(10);
+            ->get();
 
-        return view('friend.index', ['friends' => $friends]);
+        $result_friends = array();
+        foreach ($friends as $friend){
+            $item = array();
+            $item['id'] = $friend->id;
+            $item['confirmed'] = $friend->confirmed;
+            $user = User::find($friend->receiver_id);
+            $item['firstname'] = $user->firstname;
+            $item['lastname'] = $user->lastname;
+            $result_friends[] = $item;
+        }
+        $result_friends_paginated = $this->constructPagination($result_friends);
+        return view('friend.index', ['friends' => $result_friends_paginated]);
     }
 
     /**
@@ -69,32 +79,21 @@ class FriendController extends Controller
             //check if logged in user is authorized to remove a friendship
             $this->authorize('destroy', $friend);
 
-            //retrieve back the complete Friend record from the database to delete
-            /*
-             * NOTE: Must do this step because $friend is of type Friend by for some
-             * reason the id of the $friend corresponds to the id of the User to whom
-             * we want to end a friendship with, and not the id of the friend record
-             * itself...
-             * */
-            $friend_record = User::find(Auth::user()->id)
-                ->friends()
-                ->where("receiver_id", $friend->id)
-                ->first();
-            $friend_record->delete();
+            $friend->delete(); 
 
             //retrieve the other corresponding record in the two way friendship if applicable
-            $otherRecord = User::find($friend->id)
+            $otherRecord = User::find($friend->receiver_id)
                 ->friends()
                 ->where("receiver_id", Auth::user()->id)
                 ->first();
 
-            //delete other record only id it exists
+            //delete other record only if it exists
             if($otherRecord !== null) {
                 $otherRecord->delete();
             }
 
             //redirect with a message for the user
-            $user_friend = User::find($friend->id);
+            $user_friend = User::find($friend->receiver_id);
             return Redirect::to('/friends')->with('messages', "$user_friend->firstname $user_friend->lastname is no longer your friend");
         }
         return redirect('friends');
@@ -111,11 +110,12 @@ class FriendController extends Controller
      * @param $perPage the number of data to show per page
      * @return LengthAwarePaginator Pagination object
      */
-    private function constructPagination($dataArr, $perPage){
+    private function constructPagination($dataArr){
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $col = new Collection($dataArr);
-        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
-        $entries = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage);
+        $perPage = 10;
+        $entries = new LengthAwarePaginator($col->forPage($currentPage, $perPage), $col->count(), $perPage, $currentPage);
+        $entries->setPath(LengthAwarePaginator::resolveCurrentPath());
         return $entries;
     }
 }
