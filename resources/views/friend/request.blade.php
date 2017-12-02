@@ -5,28 +5,25 @@
     <div class="container">
         <div class="col-sm-offset-1 col-sm-10">
             @if(Auth::check())
-                <div class="row">
+                <div class="row padding-s">
                     <div class="col-lg-12 text-center">
-                        <h2 class="section-heading">Friend Requests</h2>
+                        <h2>Friend Requests</h2>
                     </div>
                 </div>
 
                 <div id="main" class="row">
-                    <div id="sidebar" class="col-md-3">
-                        <nav id="sidebar-nav">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href=" {{ route('friends') }} ">Back to Manage Friends</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-
                     <div id="content" class="col-md-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Here are your pending friend requests
-                            </div>
-
                             <div class="panel-body">
+                                <div  class="padding-s">
+                                    <nav>
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item"><a href=" {{ route('friends') }} ">Friends</a></li>
+                                            <li class="nav-item"><a href=" {{ route('search') }} ">Search Friends</a></li>
+                                            <li class="nav-item active"><a href="{{ route('requests') }}">Friend Request</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
                                 @if (isset($requests) && count($requests) > 0)
                                     <table class="table table-striped task-table">
                                         <tbody>

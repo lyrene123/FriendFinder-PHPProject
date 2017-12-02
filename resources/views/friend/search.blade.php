@@ -5,33 +5,29 @@
     <div class="container">
         <div class="col-sm-offset-1 col-sm-10">
             @if(Auth::check())
-                <div class="row">
+                <div class="row padding-s">
                     <div class="col-lg-12 text-center">
                         <h2 class="section-heading">Search Friends</h2>
                     </div>
                 </div>
 
                 <div id="main" class="row">
-                    <div id="sidebar" class="col-md-3">
-                        <nav id="sidebar-nav">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href=" {{ route('friends') }} ">Back to Manage Friends</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-
                     <div id="content" class="col-md-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Search for new friends
-                            </div>
 
                             <div class="panel-body">
+                                <div  class="padding-s">
+                                    <nav>
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item"><a href=" {{ route('friends') }} ">Friends</a></li>
+                                            <li class="nav-item active"><a href=" {{ route('search') }} ">Search Friends</a></li>
+                                            <li class="nav-item"><a href="{{ route('requests') }}">Friend Request</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
                             @include('common.errors')
                             <!-- Search for friend Form -->
                                 <form action="/search/results" method="GET" class="form-horizontal">
-
-
                                     <div class="form-group">
                                         <label for="search-fname" class="col-sm-3 control-label">First Name</label>
 
@@ -60,8 +56,7 @@
                                 @if (isset($users) && count($users) > 0)
                                     <table class="table table-striped task-table">
                                         <thead>
-                                        <th>Search results</th>
-                                        <th>&nbsp;</th>
+                                            <th class="text-center">Search results</th>
                                         </thead>
                                         <tbody>
                                         @foreach($users as $user)
@@ -69,17 +64,17 @@
                                             {{--Illuminate\Pagination\LengthAwarePaginator::resolveCurrentPage()--}}
                                            <tr>
                                                 <!--First name and last name-->
-                                                   <td class="table-text">
+                                                   <td class="text-center">
                                                         <strong>{{ $user['firstname'] }}</strong>
                                                         <strong>{{ $user['lastname'] }}</strong>
                                                     </td>
                                                     <!-- program of each user -->
-                                                    <td>
+                                                    <td class="text-center">
                                                         <strong>{{ $user['program'] }}</strong>
                                                     </td>
                                                     <!-- add friend button or unfriend button only if user is not you -->
                                                   @if ($user['isFriends'] && $user['id'] !== \Illuminate\Support\Facades\Auth::user()->id)
-                                                        <td>
+                                                        <td class="text-center">
                                                             <form action="{{url('/friend/' . $user['id'])}}" method="POST">
                                                                 {{ method_field('DELETE') }}
                                                                 {{ csrf_field() }}
@@ -91,7 +86,7 @@
                                                         </td>
                                                     @endif
                                                     @if (!$user['isFriends'] && $user['id'] !== \Illuminate\Support\Facades\Auth::user()->id)
-                                                        <td>
+                                                        <td class="text-center">
                                                             <form action="{{url('search/add/' . $user['id'])}}" method="POST">
                                                                 {{ csrf_field() }}
 

@@ -7,7 +7,7 @@
                 @if (Auth::check())
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4 class="text-center">Want to know your friends who is on break?</h4>
+                        <h2 class="text-center padding-s">Want to know your friends who is on break?</h2>
                         <form action="{{ url('friendbreak') }}/search" method="GET">
                             <div class="form-group">
                                 <label for="day" class="col-xs-1 col-sm-1 text-right text-preserve padding-x-none">Day: </label>
@@ -39,13 +39,13 @@
                                 </div>
                             </div>
                             <div class="col-sm-1">
-                                <input type="submit" class="btn btn-info" value="Search" name="search">
+                                <input type="submit" class="btn btn-blue" value="Search" name="search">
                             </div>
                         </form>
                         @include('common.errors')
                     </div>
 
-                    <div class="panel-body">
+                    <div class="panel-body padding-m">
                         @if(isset($users) && count($users) > 0)
                             <table class="table table-striped">
                                 <thead>
