@@ -69,15 +69,12 @@ class SearchFriendController extends Controller
             'required_without_all' => 'Please enter a :attribute',
         ]);
 
-        //put an empty string if no first name input provided
         $fname = $request->input("fname");
-
-        //put an empty string if no last name input provided
         $lname = $request->input("lname");
 
         //search for matches
-        $users = User::where('firstname', 'like', "%$fname%")
-            ->where('lastname', 'like', "%$lname%")
+        $users = User::where('firstname', 'ILIKE', "%$fname%")
+            ->where('lastname', 'ILIKE', "%$lname%")
             ->get();
 
         //construct the array result containing the list of users and boolean whether or not they are friends
