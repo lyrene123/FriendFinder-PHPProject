@@ -13,18 +13,18 @@
                 @include('common.messages')
                 <div class="row">
                     <div id="content" class="">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div  class="padding-s">
+                                    <nav>
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item active"><a href=" {{ route('friends') }} ">Friends</a></li>
+                                            <li class="nav-item"><a href=" {{ route('search') }} ">Search Friends</a></li>
+                                            <li class="nav-item"><a href="{{ route('requests') }}">Friend Request</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
                         @if (isset($friends) && count($friends) > 0)
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div  class="padding-s">
-                                        <nav>
-                                            <ul class="nav nav-tabs">
-                                                <li class="nav-item active"><a href=" {{ route('friends') }} ">Friends</a></li>
-                                                <li class="nav-item"><a href=" {{ route('search') }} ">Search Friends</a></li>
-                                                <li class="nav-item"><a href="{{ route('requests') }}">Friend Request</a></li>
-                                            </ul>
-                                        </nav>
-                                    </div>
                                     <table class="table table-striped task-table">
                                         <thead>
                                         <th>Here are your friends</th>
