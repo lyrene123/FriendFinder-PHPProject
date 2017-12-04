@@ -44,8 +44,6 @@
                     @endif
 
                     @if(isset($friends) && count($friends) > 0)
-                        <div class="panel panel-default">
-                            <div class="panel-body">
                                 <table class="table table-striped task-table">
                                     <thead>
                                         <th>Friends</th>
@@ -65,8 +63,6 @@
                                     </tbody>
                                 </table>
                                 {!! $friends->render() !!}
-                            </div>
-                        </div>
                     @else
                         <div class="panel-heading">
                             You have no registered friends.
@@ -74,6 +70,10 @@
                     @endif
                     @if (Auth::check())
                         <section class="text-center">
+                            @if(isset($pending) && count($pending) > 0)
+                                <a href=" {{ route('requests') }}"> You have pending friend requests.</a>
+                                <br/>
+                            @endif
                             <a href=" {{ route('friends') }} ">Manage your friends</a>
                             <br/>
                             <a href=" {{ route('friendbreak') }}">Find friends on break</a>
