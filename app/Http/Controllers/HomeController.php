@@ -49,6 +49,12 @@ class HomeController extends Controller
 
         $friends_paginated = $this->constructPagination($result_friends, 5);
 
+        $pending = Friend::where("receiver_id", Auth:: user()->id)
+            ->where("confirmed", false)
+            ->join("users", "friends.user_id", "=", "users.id")
+            ->get();
+
+
         $registered_courses = User::find(Auth::user()->id)
             ->where("users.id", "=", Auth::user()->id)
             ->join("course_user", "course_user.user_id", "=", "users.id")
@@ -57,7 +63,7 @@ class HomeController extends Controller
 
         $user = User::where("users.id", "=", Auth::user()->id)->get();
 
-        return view('home', ['friends' => $friends_paginated, 'registered_courses' => $registered_courses, 'user' => $user,]);
+        return view('home', ['friends' => $friends_paginated, 'pending' => $pending, 'registered_courses' => $registered_courses, 'user' => $user,]);
     }
 
     /**
