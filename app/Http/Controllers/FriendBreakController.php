@@ -58,15 +58,15 @@ class FriendBreakController extends Controller
 
         $request->validate([
             'day' => [
-                'required',
+                'required', 'numeric',
                 Rule::in($this->days)
             ],
             'start' => [
-                'required',
+                'required', 'numeric',
                 Rule::in($this->hours)
             ],
             'end' => [
-                'required',
+                'required', 'numeric',
                 Rule::in($this->hours)
             ]
         ],
@@ -95,6 +95,9 @@ class FriendBreakController extends Controller
      */
     private function findFriendsOnBreak($friends, $day, $start, $end) {
         $users = array();
+        if($start > $end)
+            return $users;
+
         foreach($friends as $friend) {
             $userFriend = User::find($friend->receiver_id);
             $courses = $userFriend->courses()->get();
@@ -118,7 +121,6 @@ class FriendBreakController extends Controller
      */
     private function isUserOnBreak($friendScheduleOfADay, $start, $end) {
         $prevEnd = 2400;
-
         $firstCourse = isset($friendScheduleOfADay[0]) ? $friendScheduleOfADay[0] : 0;
         foreach ($friendScheduleOfADay as $schedule) {
             $courseStart = $schedule->start;

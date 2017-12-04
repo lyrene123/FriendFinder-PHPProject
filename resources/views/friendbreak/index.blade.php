@@ -6,8 +6,9 @@
             <div class="col-md-10 col-md-offset-1">
                 @if (Auth::check())
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="text-center">Want to know your friends who is on break?</h4>
+                    <div class="panel-body padding-m">
+                        <h2 class="text-center padding-s">Want to know your friends who is on break?</h2>
+                        @include('common.errors')
                         <form action="{{ url('friendbreak') }}/search" method="GET">
                             <div class="form-group">
                                 <label for="day" class="col-xs-1 col-sm-1 text-right text-preserve padding-x-none">Day: </label>
@@ -39,33 +40,32 @@
                                 </div>
                             </div>
                             <div class="col-sm-1">
-                                <input type="submit" class="btn btn-info" value="Search" name="search">
+                                <input type="submit" class="btn btn-blue" value="Search" name="search">
                             </div>
                         </form>
-                        @include('common.errors')
-                    </div>
 
-                    <div class="panel-body">
                         @if(isset($users) && count($users) > 0)
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Firstname</th>
-                                    <th>Lastname</th>
-                                    <th>Email</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($users as $user)
+                            <div class="padding-l">
+                                <table class="table table-striped">
+                                    <thead>
                                     <tr>
-                                        <td>{{ $user->firstname }}</td>
-                                        <td>{{ $user->lastname }}</td>
-                                        <td>{{ $user->email }}</td>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>Email</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($users as $user)
+                                        <tr>
+                                            <td>{{ $user->firstname }}</td>
+                                            <td>{{ $user->lastname }}</td>
+                                            <td>{{ $user->email }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             {!! $users->appends($_GET)->render() !!}
+                            </div>
                         @endif
                     </div>
                 </div>
