@@ -53,22 +53,14 @@
                                     </thead>
                                     <tbody>
                                     @foreach ($friends as $friend)
-                                        <tr>
-                                            <td class="table-text">
-                                                <strong>{{ $friend['firstname'] }}</strong>
-                                                <strong>{{ $friend['lastname'] }}</strong>
-                                            </td>
-
-                                            @if($friend['confirmed'] === true)
-                                                <td>
-                                                    <strong>CONFIRMED</strong>
+                                        @if($friend['confirmed'] === true)
+                                            <tr>
+                                                <td class="table-text">
+                                                    <strong>{{ $friend['firstname'] }}</strong>
+                                                    <strong>{{ $friend['lastname'] }}</strong>
                                                 </td>
-                                            @else
-                                                <td>
-                                                    <strong>PENDING</strong>
-                                                </td>
-                                            @endif
-                                        </tr>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                     </tbody>
                                 </table>
