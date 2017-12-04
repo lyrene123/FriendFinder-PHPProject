@@ -68,8 +68,8 @@ class CourseManagerController extends Controller
         $courses = array();
 
         // find the courses associated with the user input
-        $courses_by_name = Course::where('class', 'like', '%'.$input.'%')->get();
-        $courses_by_title = Course::where('title', 'like', '%'.$input.'%')->get();
+        $courses_by_name = Course::where('class', 'ilike', '%'.$input.'%')->get();
+        $courses_by_title = Course::where('title', 'ilike', '%'.$input.'%')->get();
 
         // courses information by course name
         foreach($courses_by_name as $cbn){
@@ -105,7 +105,7 @@ class CourseManagerController extends Controller
        $allCourses = Course::all();
        foreach ($allCourses as $aCourse){
            $found = $aCourse->teachers()
-                        ->where('name','like', "%$input%")
+                        ->where('name','ilike', "%$input%")
                         ->get();
            if(count($found) > 0 && !in_array($aCourse, $courses)){
                if($registered_courses->where('title', $aCourse->title)->count() === 0) {
