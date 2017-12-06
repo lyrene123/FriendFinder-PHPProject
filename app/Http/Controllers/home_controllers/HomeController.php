@@ -4,19 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Friend;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Class HomeController
+ * HomeController defines the controller for the FriendFinder site's default / home page. This controller will retrieve
+ * all data from the database necessary to display on the home page, and send it to the view. The page is only
+ * accessible to authenticated users.
+ *
+ * @author Peter Bellefleur
+ * @author Lyrene Labor
+ * @author Philippe Langlois
+ * @author Pengkim Sy
  * @package App\Http\Controllers
  */
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Create a new controller instance. Controller attaches authorization middleware, to prevent unauthenticated users
+     * from accessing this page.
      *
      * @return void
      */
@@ -26,16 +33,19 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Retrieve data from database, and show the application dashboard. Retrieves a list of courses the user has
+     * registered for, a list of friends, and a list of pending friend requests using the related models.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        //get list of all user friends
         $friends = User::find(Auth::user()->id)
             ->friends()
             ->get();
 
+        //break friends list into 2D array
         $result_friends = array();
         foreach($friends as $friend) {
             $item = array();
@@ -47,20 +57,22 @@ class HomeController extends Controller
             $result_friends[] = $item;
         }
 
+        //paginate array of friends
         $friends_paginated = $this->constructPagination($result_friends, 5);
 
+        //get list of incoming, pending friend requests for user
         $pending = Friend::where("receiver_id", Auth:: user()->id)
             ->where("confirmed", false)
             ->join("users", "friends.user_id", "=", "users.id")
             ->get();
 
-
+        //get list of registered courses for user
         $registered_courses = User::find(Auth::user()->id)
             ->courses()
             ->get();
 
         $user = User::find(Auth::user()->id);
-
+        //send all retrieved data to the view
         return view('home', ['friends' => $friends_paginated, 'pending' => $pending, 'registered_courses' => $registered_courses, 'user' => $user,]);
     }
 
