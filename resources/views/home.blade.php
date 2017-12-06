@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="text-center">Hello, {{ $user[0]->firstname }}!</h3>
+                    <h3 class="text-center">Hello, {{ $user->firstname }}!</h3>
                 </div>
 
                 <div class="panel-body">

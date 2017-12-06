@@ -4,10 +4,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
+                <!-- Only if the user is authenticated, display the rest of the page -->
                 @if (Auth::check())
                 <div class="panel panel-default">
                     <div class="panel-body padding-m">
-                        <h2 class="text-center padding-s">Want to know your friends who is on break?</h2>
+                        <h2 class="text-center padding-s">Want to know your friends who are on break?</h2>
                         @include('common.errors')
                         <form action="{{ url('friendbreak') }}/search" method="GET">
                             <div class="form-group">
@@ -43,7 +44,7 @@
                                 <input type="submit" class="btn btn-blue" value="Search" name="search">
                             </div>
                         </form>
-
+                        <!-- if there are results after the search, display the results -->
                         @if(isset($users) && count($users) > 0)
                             <div class="padding-l">
                                 <table class="table table-striped">

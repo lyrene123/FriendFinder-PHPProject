@@ -3,10 +3,20 @@
 use Illuminate\Database\Seeder;
 use App\Friend;
 
+/**
+ * Class SampleFriendsSeeder that handles the seeding of the Friends table with data
+ * already existing in the Users table.
+ *
+ * @author Lyrene Labor
+ * @author Pengkim Sy
+ * @author Peter Bellefleur
+ * @author Phil Langlois
+ */
 class SampleFriendsSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeds for the Friends table with data existing from the
+     * users table.
      *
      * @return void
      */

@@ -56,12 +56,10 @@ class HomeController extends Controller
 
 
         $registered_courses = User::find(Auth::user()->id)
-            ->where("users.id", "=", Auth::user()->id)
-            ->join("course_user", "course_user.user_id", "=", "users.id")
-            ->join("courses", "courses.id", "=", "course_user.course_id")
+            ->courses()
             ->get();
 
-        $user = User::where("users.id", "=", Auth::user()->id)->get();
+        $user = User::find(Auth::user()->id);
 
         return view('home', ['friends' => $friends_paginated, 'pending' => $pending, 'registered_courses' => $registered_courses, 'user' => $user,]);
     }

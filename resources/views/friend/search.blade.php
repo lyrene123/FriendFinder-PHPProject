@@ -4,6 +4,7 @@
 
     <div class="container">
         <div class="col-sm-offset-1 col-sm-10">
+            <!-- Only if the user is authenticated, display the rest of the page -->
             @if(Auth::check())
                 <div class="row padding-s">
                     <div class="col-lg-12 text-center">
@@ -52,7 +53,7 @@
                                         </div>
                                     </div>
                                 </form>
-
+                                <!-- Only if there are search results for users, display the list of users after the search -->
                                 @if (isset($users) && count($users) > 0)
                                     <table class="table table-striped task-table">
                                         <thead>
@@ -60,8 +61,6 @@
                                         </thead>
                                         <tbody>
                                         @foreach($users as $user)
-                                            {{-- var_dump($users[$i]) --}}
-                                            {{--Illuminate\Pagination\LengthAwarePaginator::resolveCurrentPage()--}}
                                            <tr>
                                                 <!--First name and last name-->
                                                    <td class="text-center">
@@ -72,7 +71,7 @@
                                                     <td class="text-center">
                                                         <strong>{{ $user['program'] }}</strong>
                                                     </td>
-                                                    <!-- add friend button or unfriend button only if user is not you -->
+                                                    <!-- dont add friend button or unfriend button user is you -->
                                                   @if ($user['isFriends'] && $user['id'] !== \Illuminate\Support\Facades\Auth::user()->id)
                                                         <td class="text-center">
                                                             <form action="{{url('/friend/' . $user['id'])}}" method="POST">
@@ -85,6 +84,7 @@
                                                             </form>
                                                         </td>
                                                     @endif
+                                                    <!-- add friend button or unfriend button if user is not you -->
                                                     @if (!$user['isFriends'] && $user['id'] !== \Illuminate\Support\Facades\Auth::user()->id)
                                                         <td class="text-center">
                                                             <form action="{{url('search/add/' . $user['id'])}}" method="POST">
@@ -102,6 +102,7 @@
                                     </table>
                                     {!! $users->appends($_GET)->render() !!}
                                 @endif
+                            <!-- Display a message to the user if no search result found -->
                                 @if (isset($users) && count($users) === 0)
                                     <div class="panel-heading">
                                         No results found

@@ -4,6 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Encapsulates the properties and behavior of a Teacher Model in the FriendFinder application.
+ * Represents the Teacher entity of the database which can belong to many courses.
+ *
+ * @author Lyrene Labor
+ * @author Pengkim Sy
+ * @author Peter Bellefleur
+ * @author Phil Langlois
+ * @package App
+ */
 class Teacher extends Model
 {
 

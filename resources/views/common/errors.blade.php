@@ -1,3 +1,4 @@
+<!-- The following blade is to display the error messages in the view  -->
 @if (count($errors) > 0)
     <div class="alert alert-danger">
         <ul>
