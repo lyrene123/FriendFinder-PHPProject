@@ -119,87 +119,9 @@ class ApiController extends Controller
 
         $user = User::where('email', $request->input('email'))->first();
         $friends = $user->friends()->where('confirmed', true)->get();
-        $breakFriends = $this->findFriendsOnBreak($friends, $day, $start, $end);
-
+        $breakFriends = FriendBreakController::findFriendsOnBreak($friends, $day, $start, $end);
+        
         return response()->json($this->createJsonUser($breakFriends), 200);
-    }
-
-    /**
-     * Find all the friends who are on break on a given day with start and
-     * end time
-     *
-     * @param array $friends
-     * @param $day
-     * @param $start
-     * @param $end
-     * @return array of user models who are on break
-     */
-    private function findFriendsOnBreak($friends, $day, $start, $end) {
-        $users = array();
-        foreach($friends as $friend) {
-            $userFriend = User::find($friend->receiver_id);
-            $courses = $userFriend->courses()->get();
-            $schedulesOfADay = $this->findSchedules($courses, $day, $start, $end);
-            if ($this->isUserOnBreak($schedulesOfADay, $start, $end)) {
-                $users[$userFriend->id] = $userFriend;
-            }
-            unset($schedulesOfADay);
-        }
-        return $users;
-    }
-
-    /**
-     * Check if the given friend's schedule of the day is available in
-     * the given start and end time.
-     *
-     * @param array $friendScheduleOfADay
-     * @param $start
-     * @param $end
-     * @return true if the friend is on break
-     */
-    private function isUserOnBreak($friendScheduleOfADay, $start, $end) {
-        $prevEnd = 2400;
-        $firstCourse = isset($friendScheduleOfADay[0]) ? $friendScheduleOfADay[0] : 0;
-        foreach ($friendScheduleOfADay as $schedule) {
-            $courseStart = $schedule->start;
-            $courseEnd = $schedule->end;
-            $diff = $courseStart - $prevEnd;
-            $prevEnd = $courseEnd;
-            if ($start >= $firstCourse->start && $end <= $courseEnd && $diff <= 0)
-                return false;
-        }
-        return true;
-    }
-
-    /**
-     * Find all the schedules that are close to start and end time. For example,
-     * if start time is 1030, end time is 1200, and the courses of that day are
-     * from 1000 to 1300, this will return that course order by the start time.
-     *
-     * @param $courses - array of Course object
-     * @param $day - integer of day (1 - 5)
-     * @return array of all the schedule order by start time
-     */
-    private function findSchedules($courses, $day, $start, $end) {
-        $scheduleArray = array();
-        foreach ($courses as $course) {
-            $schedules = $course->teachers()
-                ->where('course_teacher.day', '=', $day)
-                ->where(function ($query) use ($start, $end){
-                    $query->whereRaw('? between course_teacher.start and course_teacher.end', [$start])
-                        ->orWhereRaw('? between course_teacher.start and course_teacher.end', [$end]);
-                })->get();
-            foreach ($schedules as $schedule) {
-                $scheduleArray[] = $schedule->pivot;
-            }
-        }
-
-        // Sort by start
-        usort($scheduleArray, function($a, $b) {
-            return $a->start - $b->start;
-        });
-
-        return $scheduleArray;
     }
 
     /**
