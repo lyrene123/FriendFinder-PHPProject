@@ -3,10 +3,19 @@
 use Illuminate\Database\Seeder;
 use App\User;
 
+/**
+ * Class SampleUsersSeeder that handles the seeding of the Users table with
+ * mock data
+ *
+ * @author Lyrene Labor
+ * @author Pengkim Sy
+ * @author Peter Bellefleur
+ * @author Phil Langlois
+ */
 class SampleUsersSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeds for the Users table with mock data.
      *
      * @return void
      */

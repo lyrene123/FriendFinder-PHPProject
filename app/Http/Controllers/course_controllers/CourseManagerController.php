@@ -11,7 +11,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Controller the manager the course manager page.
+ * Controller class that handles the course manager page.
+ * Handles the logged in user's action of adding a course and dropping a course.
+ * Handles as well the feature of searching for courses matching the search input of the user based
+ * on the title, course name, and teacher.
+ *
+ * @author Lyrene Labor
+ * @author Pengkim Sy
+ * @author Peter Bellefleur
+ * @author Phil Langlois
+ * @package App\Http\Controllers
  */
 class CourseManagerController extends Controller
 {
@@ -27,19 +36,13 @@ class CourseManagerController extends Controller
     /**
      * Method that associates the index view with it's associated models.
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request) {
+    public function index() {
 
         // Get all courses the user is currently registered in
-        $registered_courses = User::find(Auth::user()->id)
-            ->where("users.id", "=", Auth::user()->id)
-            ->join("course_user", "course_user.user_id", "=", "users.id")
-            ->join("courses", "courses.id", "=", "course_user.course_id")
-            ->get();
-
-        $user = User::where("users.id", "=", Auth::user()->id)->get();
+        $user = User::find(Auth::user()->id);
+        $registered_courses = $user->courses()->get();
 
         return view('coursemanager.index', ['registered_courses' => $registered_courses, 'user' => $user,]);
     }
@@ -53,13 +56,8 @@ class CourseManagerController extends Controller
     public function search(Request $request){
 
         // Get all courses the user is currently registered in
-        $registered_courses = User::find(Auth::user()->id)
-            ->where("users.id", "=", Auth::user()->id)
-            ->join("course_user", "course_user.user_id", "=", "users.id")
-            ->join("courses", "courses.id", "=", "course_user.course_id")
-            ->get();
-
-        $user = User::where("users.id", "=", Auth::user()->id)->get();
+        $user = User::find(Auth::user()->id);
+        $registered_courses = $user->courses()->get();
 
         // validate the user input
         $this->validate($request, ['search_input' => 'required',]);
@@ -133,7 +131,7 @@ class CourseManagerController extends Controller
      * @param Course $course
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function drop(Request $request, Course $course){
+    public function drop(Course $course){
         $this->authorize('drop', $course);
 
         $registered_course = CourseUser::select('id')
@@ -152,9 +150,9 @@ class CourseManagerController extends Controller
      * @param Course $course
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function add(Request $request, Course $course){
+    public function add(Course $course){
 
-        $enrollment_course = Courseuser::firstOrCreate([
+        $enrollment_course = CourseUser::firstOrCreate([
             'user_id' => Auth::user()->id,
             'course_id' => $course->id,
         ]);

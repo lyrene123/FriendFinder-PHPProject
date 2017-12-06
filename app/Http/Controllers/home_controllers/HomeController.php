@@ -68,14 +68,10 @@ class HomeController extends Controller
 
         //get list of registered courses for user
         $registered_courses = User::find(Auth::user()->id)
-            ->where("users.id", "=", Auth::user()->id)
-            ->join("course_user", "course_user.user_id", "=", "users.id")
-            ->join("courses", "courses.id", "=", "course_user.course_id")
+            ->courses()
             ->get();
 
-        //get handle to user model
-        $user = User::where("users.id", "=", Auth::user()->id)->get();
-
+        $user = User::find(Auth::user()->id);
         //send all retrieved data to the view
         return view('home', ['friends' => $friends_paginated, 'pending' => $pending, 'registered_courses' => $registered_courses, 'user' => $user,]);
     }

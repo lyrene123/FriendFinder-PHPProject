@@ -3,10 +3,20 @@
 use Illuminate\Database\Seeder;
 use App\CourseUser;
 
+/**
+ * Class CourseUserTableSeeder that handles the seeding of the Course_User table with data
+ * taken from the CSV file provided by the teacher.
+ *
+ * @author Lyrene Labor
+ * @author Pengkim Sy
+ * @author Peter Bellefleur
+ * @author Phil Langlois
+ */
 class CourseUserTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeds for the Course_User table which mock data.
+     * Data is used from the existing data from the User table and the courses table.
      *
      * @return void
      */

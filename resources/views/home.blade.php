@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <!-- retrieve user name to display !-->
-                    <h3 class="text-center">Hello, {{ $user[0]->firstname }}!</h3>
+                    <h3 class="text-center">Hello, {{ $user->firstname }}!</h3>
                 </div>
 
                 <div class="panel-body">

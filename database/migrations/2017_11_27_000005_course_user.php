@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Class CourseUser which handles migration of the Course_User table in the database
+ * and for reversing the migrations of the table.
+ */
 class CourseUser extends Migration
 {
     /**

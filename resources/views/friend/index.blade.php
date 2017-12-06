@@ -4,6 +4,7 @@
 @section('content')
     <div class="container">
         <div class="col-sm-offset-1 col-sm-10">
+            <!-- Only if the user is authenticated, display the rest of the page -->
             @if(Auth::check())
                 <div class="row padding-s">
                     <div class="col-lg-12 text-center">
@@ -24,6 +25,7 @@
                                         </ul>
                                     </nav>
                                 </div>
+                                <!-- Only if user has friends, display the list of friends -->
                         @if (isset($friends) && count($friends) > 0)
                                     <table class="table table-striped task-table">
                                         <thead>
@@ -68,6 +70,7 @@
                                 </div>
                             </div>
                         @else
+                            <!-- Display to the user that he/she has no friends if no friends found -->
                             <div class="panel-heading">
                                 You have no friends :(
                             </div>

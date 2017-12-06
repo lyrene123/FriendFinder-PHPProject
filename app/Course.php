@@ -5,6 +5,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\CourseUser;
 
+/**
+ * Encapsulates the properties and behavior of a Course Model in the FriendFinder application.
+ * Represents the Course entity of the database which can belong to many users and many teachers
+ * as well.
+ *
+ * @author Lyrene Labor
+ * @author Pengkim Sy
+ * @author Peter Bellefleur
+ * @author Phil Langlois
+ * @package App
+ */
 class Course extends Model
 {
     protected $fillable = ["class", "section", "title",];
