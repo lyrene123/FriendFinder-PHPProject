@@ -120,7 +120,7 @@ class ApiController extends Controller
         $user = User::where('email', $request->input('email'))->first();
         $friends = $user->friends()->where('confirmed', true)->get();
         $breakFriends = FriendBreakController::findFriendsOnBreak($friends, $day, $start, $end);
-        
+
         return response()->json($this->createJsonUser($breakFriends), 200);
     }
 
