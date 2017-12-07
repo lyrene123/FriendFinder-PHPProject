@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 /**
- * Controller class that seaching of other user by the logged in user of in the FindFriend
+ * Controller class that searching of other user by the logged in user of in the FindFriend
  * web application. Handles returning the results of the search back to the view.
  * Handles adding a new friend for the logged in user clicking on the Add Friend button
  * on a specific user who is part of a search result.
@@ -139,8 +139,8 @@ class SearchFriendController extends Controller
      * User's first and last name, id, program and a boolean whether or not a user is already friends with
      * the logged in user
      *
-     * @param $users
-     * @return array
+     * @param $users list of users
+     * @return array containing specific information of each users
      */
     private function constructSearchResultArr($users){
         $usersArr = array();

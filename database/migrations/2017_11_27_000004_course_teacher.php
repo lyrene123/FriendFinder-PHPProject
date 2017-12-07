@@ -4,6 +4,15 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Class CourseTeacher which handles migration of the Course_Teacher table in the database
+ * and for reversing the migrations of the table.
+ *
+ * @author Lyrene Labor
+ * @author Pengkim Sy
+ * @author Peter Bellefleur
+ * @author Phil Langlois
+ */
 class CourseTeacher extends Migration
 {
     /**

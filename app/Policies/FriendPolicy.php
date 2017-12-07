@@ -43,7 +43,7 @@ class FriendPolicy
     public function destroy(User $user, Friend $friend)
     {
         //can only unfriend someone if that person is your friend.
-        //this must return something to be valid
+        //this must return a record to be valid
         $found = $user->friends()
             ->where('receiver_id', $friend->receiver_id)
             ->first();

@@ -4,6 +4,7 @@
 
     <div class="container">
         <div class="col-sm-offset-1 col-sm-10">
+            <!-- Only if the user is authenticated, display the rest of the page -->
             @if(Auth::check())
                 <div class="row padding-s">
                     <div class="col-lg-12 text-center">
@@ -24,6 +25,7 @@
                                         </ul>
                                     </nav>
                                 </div>
+                                <!-- Only if the user has friends requests, display the list of requests -->
                                 @if (isset($requests) && count($requests) > 0)
                                     <table class="table table-striped task-table">
                                         <tbody>
@@ -59,6 +61,7 @@
                                     </table>
                                     {!! $requests->render() !!}
                                 @endif
+                            <!-- if no requests, display a message to the user -->
                                 @if (isset($requests) && count($requests) === 0)
                                     <div class="panel-heading">
                                         No pending requests

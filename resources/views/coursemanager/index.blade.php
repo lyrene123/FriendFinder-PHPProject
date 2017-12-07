@@ -6,8 +6,10 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        <!-- Only if an existing user passed to the view exists, display the rest of the page -->
                         @if(isset($user))
-                            <h3 class="text-center">Hello, {{ $user[0]->firstname }} here are your currently registered courses</h3>
+                            <h3 class="text-center">Hello, {{ $user->firstname }} here are your currently registered courses</h3>
+                            <!-- Only if user has registered courses, display list of courses -->
                             @if(isset($registered_courses) && count($registered_courses) > 0)
                                 <table class="table table-striped task-table">
                                     <thead>
@@ -23,11 +25,11 @@
                                             <td>{{ $course->section }}</td>
                                             <td>{{ $course->title }}</td>
                                             <td>
-                                                <form action="{{ url('coursemanager/'.$course->course_id) }}" method="POST">
+                                                <form action="{{ url('coursemanager/'. $course->id) }}" method="POST">
                                                     {{ csrf_field() }}
                                                     {{ method_field('DELETE') }}
 
-                                                    <button type="submit" id="delete-registered-course-{{ $course->course_id }}" class="btn btn-danger">
+                                                    <button type="submit" id="delete-registered-course-{{ $course->id }}" class="btn btn-danger">
                                                         <i class="fa fa-btn fa-trash"></i>Drop
                                                     </button>
                                                 </form>
@@ -55,6 +57,7 @@
                                 </button>
                             </form>
                         </div>
+                        <!-- Only if there are search results of courses, display the list of courses after the search -->
                         @if((isset($courses) && count($courses) > 0))
                             <h4 class="text-center">Found Courses</h4>
                             <table class="table table-striped task-table">

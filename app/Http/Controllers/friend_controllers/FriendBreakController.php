@@ -11,6 +11,12 @@ use Illuminate\Validation\Rule;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Input;
 
+/**
+ * Class FriendBreakController show an authenticate user a form to with day,
+ * start and end time to find the friends who are on break.
+ *
+ * @package App\Http\Controllers
+ */
 class FriendBreakController extends Controller
 {
     private $hours;
@@ -93,7 +99,7 @@ class FriendBreakController extends Controller
      * @param $end
      * @return array of user models who are on break
      */
-    private function findFriendsOnBreak($friends, $day, $start, $end) {
+    public static function findFriendsOnBreak($friends, $day, $start, $end) {
         $users = array();
         if($start > $end)
             return $users;
@@ -101,8 +107,8 @@ class FriendBreakController extends Controller
         foreach($friends as $friend) {
             $userFriend = User::find($friend->receiver_id);
             $courses = $userFriend->courses()->get();
-            $schedulesOfADay = $this->findSchedules($courses, $day, $start, $end);
-            if ($this->isUserOnBreak($schedulesOfADay, $start, $end)) {
+            $schedulesOfADay = self::findSchedules($courses, $day, $start, $end);
+            if (self::isUserOnBreak($schedulesOfADay, $start, $end)) {
                 $users[$userFriend->id] = $userFriend;
             }
             unset($schedulesOfADay);
@@ -119,7 +125,7 @@ class FriendBreakController extends Controller
      * @param $end
      * @return true if the friend is on break
      */
-    private function isUserOnBreak($friendScheduleOfADay, $start, $end) {
+    private static function isUserOnBreak($friendScheduleOfADay, $start, $end) {
         $prevEnd = 2400;
         $firstCourse = isset($friendScheduleOfADay[0]) ? $friendScheduleOfADay[0] : 0;
         foreach ($friendScheduleOfADay as $schedule) {
@@ -142,7 +148,7 @@ class FriendBreakController extends Controller
      * @param $day - integer of day (1 - 5)
      * @return array of all the schedule order by start time
      */
-    private function findSchedules($courses, $day, $start, $end) {
+    private static function findSchedules($courses, $day, $start, $end) {
         $scheduleArray = array();
         foreach ($courses as $course) {
             $schedules = $course->teachers()

@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Encapsulates the properties and behavior of a User Model in the FriendFinder application.
+ * Represents the User entity of the database which can belong to many courses and can have
+ * many friends.
+ *
+ * @author Lyrene Labor
+ * @author Pengkim Sy
+ * @author Peter Bellefleur
+ * @author Phil Langlois
+ * @package App
+ */
 class User extends Authenticatable
 {
     use Notifiable;
