@@ -7,6 +7,8 @@ FriendFinder05 is a PHP web application, designed using the Laravel framework, f
 * Break finder: This feature allows a user to provide a specific time and day of the week, from which the site will search for friends who do not have classes at this time.
 * APIs: FriendFinder05 features a number of APIs that can be accessed, given valid user credentials, to provide data that may be useful for those seeking to create addons or external apps for the site. APIs include: finding all friends, finding friends not in class for a given time, finding friends registered for a class, finding a friend's location at a given time.
 * User registration and authentication, to ensure data can only be accessed by registered users.
+<br>
+Heroku URL: https://friendfinder05.herokuapp.com/
 
 ## Developed by:
 * Peter Bellefleur
