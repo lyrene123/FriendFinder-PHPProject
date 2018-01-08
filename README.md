@@ -13,3 +13,7 @@ FriendFinder05 is a PHP web application, designed using the Laravel framework, f
 * Lyrene Labor
 * Philippe Langlois
 * Pengkim Sy
+
+## Note:
+This repo is the duplicated version of the original private repo of the team project. <br>
+Still work in progress in the security/authentication of the APIs
